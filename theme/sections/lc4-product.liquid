@@ -65,9 +65,7 @@
   <div class="lc4p-info">
     {%- if rayon -%}<p class="lc4p-rayon"><a href="{{ rayon.url }}">{{ rayon.title }}</a></p>{%- endif -%}
     <h1 id="lc4p-title" class="lc4p-title">{{ name_main }}{%- if name_sub != blank -%}<span class="lc4p-sub">{{ name_sub }}</span>{%- endif -%}</h1>
-    {%- if rv and rc > 0 -%}
-      <a class="lc4p-rating" href="#lc4p-avis">★ {{ rv.rating | round: 1 | replace: '.', ',' }}/5 <span>· {{ rc }} avis</span></a>
-    {%- endif -%}
+    <div class="lc4p-revtop">{%- render 'lc4-rating', p: product -%}{%- render 'ag-stars-product-template' -%}</div>
     {%- liquid
       assign pl = product.metafields.custom.pitch.value | newline_to_br | split: '<br />'
       assign p_k = ''

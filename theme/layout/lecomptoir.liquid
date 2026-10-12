@@ -31,6 +31,8 @@
     {{ 'lc4b.css' | asset_url | stylesheet_tag }}
     {{ 'lc4s.css' | asset_url | stylesheet_tag }}
     {{ 'lc4c.css' | asset_url | stylesheet_tag }}
+    {{ 'lc4fx.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'lc4fx.js' | asset_url }}" defer></script>
     {%- if request.page_type == 'index' -%}
       {{ 'lc-c.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'lc-c.js' | asset_url }}" defer></script>

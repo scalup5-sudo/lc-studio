@@ -1,0 +1,41 @@
+{%- comment -%} Carte produit v4. Visuel studio Le Comptoir en priorité (fichier lcs-N), sinon photo fournisseur posée sur fond clair. Params : product, sizes {%- endcomment -%}
+{%- liquid
+  assign img = product.featured_media
+  assign studio = false
+  for m in product.media
+    assign msrc = m.preview_image.src | default: ''
+    if msrc contains '/lcs-' or m.alt contains 'Le Comptoir studio'
+      assign img = m
+      assign studio = true
+      break
+    endif
+  endfor
+  unless studio
+    assign src = img.preview_image.src | default: ''
+    if src contains 'ai-premium' or img.preview_image.width == 1264
+      assign studio = true
+    endif
+  endunless
+  assign v = product.selected_or_first_available_variant
+  assign name_main = product.title | split: ' – ' | first | split: ' - ' | first
+-%}
+<article class="lc4-card{% if studio %} is-studio{% endif %}">
+  <a class="lc4-card__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+    {%- if img -%}{{ img | image_url: width: 900 | image_tag: widths: '360,540,720,900', sizes: sizes, loading: 'lazy', decoding: 'async', alt: '' }}{%- endif -%}
+  </a>
+  <div class="lc4-card__info">
+    <div><a class="lc4-card__title" href="{{ product.url }}">{{ name_main }}</a>{%- render 'lc4-rating', p: product -%}</div>
+    <span class="lc4-card__price">{% if product.price_varies %}<small>dès </small>{% endif %}{{ product.price | money }}</span>
+  </div>
+  {%- if product.available and product.has_only_default_variant -%}
+    <form method="post" action="{{ routes.cart_add_url }}" class="lc4-card__form">
+      <input type="hidden" name="id" value="{{ v.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <button type="submit" class="lc4-card__add">Ajouter au panier</button>
+    </form>
+  {%- elsif product.available -%}
+    <a class="lc4-card__add" href="{{ product.url }}">Choisir une option</a>
+  {%- else -%}
+    <span class="lc4-card__add is-off">Bientôt de retour</span>
+  {%- endif -%}
+</article>
