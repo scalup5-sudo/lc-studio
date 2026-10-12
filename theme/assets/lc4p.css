@@ -1,0 +1,65 @@
+/* LE COMPTOIR v4 — fiche produit */
+.lc4p .lc4p-crumbs{padding-top:132px;display:flex;gap:10px;font-size:13px;color:var(--gris)}
+.lc4p-crumbs a{color:inherit;text-decoration:none}
+.lc4p-crumbs a:hover{color:var(--encre)}
+.lc4p-main{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:start;padding-top:20px;padding-bottom:100px}
+.lc4p-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.lc4p-shot{margin:0;aspect-ratio:1;border-radius:22px;overflow:hidden;background:#F1EBE1}
+.lc4p-shot--main{grid-column:1/-1}
+.lc4p-shot img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.lc4p-info{position:sticky;top:110px;display:flex;flex-direction:column}
+.lc4p-rayon{margin:0 0 14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.lc4p-rayon a{color:var(--brun);text-decoration:none}
+.lc4p-title{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(40px,4.2vw,64px);line-height:.95;letter-spacing:-.025em}
+.lc4p-sub{margin:12px 0 0;font-size:17px;color:var(--brun)}
+.lc4p-rating{margin-top:14px;font-size:14px;color:var(--encre);text-decoration:none;align-self:flex-start}
+.lc4p-rating span{color:var(--gris)}
+.lc4p-price{margin:26px 0 0;display:flex;align-items:baseline;gap:12px;font-family:var(--serif);font-size:40px;line-height:1}
+.lc4p-price s{font-size:22px;color:var(--gris)}
+.lc4p-klarna{margin:8px 0 0;font-size:14px;color:var(--brun)}
+.lc4p-form{margin-top:26px;display:flex;flex-direction:column;gap:10px}
+.lc4p-label{font-size:13px;color:var(--brun)}
+.lc4p-select{position:relative}
+.lc4p-select select{width:100%;height:52px;border-radius:14px;border:1px solid rgba(22,19,15,.25);background:rgba(255,255,255,.5);padding:0 44px 0 16px;font:15px var(--sans);color:var(--encre);appearance:none;-webkit-appearance:none;cursor:pointer}
+.lc4p-select::after{content:'';position:absolute;right:18px;top:50%;width:8px;height:8px;border-right:1.5px solid var(--encre);border-bottom:1.5px solid var(--encre);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.lc4p-buy{display:grid;grid-template-columns:84px minmax(0,1fr);gap:10px;margin-top:6px}
+.lc4p-qty{height:56px;border-radius:999px;border:1px solid rgba(22,19,15,.25);background:transparent;text-align:center;font:15px var(--sans);color:var(--encre)}
+.lc4p-add{height:56px;justify-content:center;width:100%;font-size:15px}
+.lc4p-add[disabled]{opacity:.45;cursor:default;background:var(--encre)}
+.lc4p-reassure{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid rgba(22,19,15,.14)}
+.lc4p-reassure li{padding:14px 0;border-bottom:1px solid rgba(22,19,15,.14);font-size:14px;line-height:1.5;color:var(--brun)}
+.lc4p-reassure strong{color:var(--encre);font-weight:500}
+.lc4p-reassure a{color:inherit}
+.lc4p-acc{border-bottom:1px solid rgba(22,19,15,.14)}
+.lc4p-acc summary{list-style:none;cursor:pointer;padding:18px 0;font-family:var(--serif);font-size:24px;display:flex;justify-content:space-between}
+.lc4p-acc summary::-webkit-details-marker{display:none}
+.lc4p-acc summary::after{content:'+';font-family:var(--sans);font-size:20px;color:var(--gris)}
+.lc4p-acc[open] summary::after{content:'−'}
+.lc4p-rte{padding-bottom:20px;font-size:15px;line-height:1.65;color:var(--brun)}
+.lc4p-rte h1,.lc4p-rte h2,.lc4p-rte h3{font-family:var(--serif);font-weight:400;color:var(--encre);font-size:22px;margin:18px 0 8px}
+.lc4p-rte img{max-width:100%;height:auto;border-radius:12px}
+.lc4p-rte ul{padding-left:18px}
+.lc4p-rte a{color:var(--encre)}
+.lc4p-reviews{padding-bottom:60px}
+@media (max-width:1000px){
+ .lc4p-main{grid-template-columns:minmax(0,1fr)}
+ .lc4p-info{position:static}
+ .lc4p-gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin:0 -24px;padding:0 24px}
+ .lc4p-shot{flex:0 0 86%;scroll-snap-align:center}
+}
+@media (max-width:560px){
+ .lc4p .lc4p-crumbs{padding-top:116px}
+ .lc4p-title{font-size:38px}
+ .lc4p-price{font-size:34px}
+}
+
+.lc4p-hook{margin:14px 0 0;font-family:var(--serif);font-style:italic;font-size:clamp(20px,1.9vw,26px);line-height:1.25;color:var(--terre,#B4471F);max-width:30ch}
+.lc4p-pitch{padding:2px 0 8px;color:var(--encre)}
+.lc4p-pitch__s{margin:0 0 14px;font-size:17px;line-height:1.6}
+.lc4p-pitch ul{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:10px}
+.lc4p-pitch li{position:relative;padding-left:22px;font-size:15px;line-height:1.55;color:var(--brun)}
+.lc4p-pitch li::before{content:'';position:absolute;left:2px;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--ocre,#E3A04A)}
+.lc4p-pitch li strong{color:var(--encre);font-weight:500}
+.lc4p-pitch__c{margin:0;padding:14px 16px;border-radius:14px;background:rgba(227,160,74,.14);font-family:var(--serif);font-size:19px;line-height:1.35}
+.lc4p-pitch + .lc4p-rte{border-top:1px solid rgba(22,19,15,.1);margin-top:12px;padding-top:4px}
+.lc4p-rte--d > h2:first-child,.lc4p-rte--d > h2:first-child + p{display:none}
