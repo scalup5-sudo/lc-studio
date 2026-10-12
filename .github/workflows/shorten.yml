@@ -1,0 +1,16 @@
+name: shorten
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  mv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          mkdir -p s
+          while IFS=$'\t' read -r n id h st t; do git mv "out/$h.jpg" "s/lcs-$n.jpg"; done < jobs/short.tsv
+          touch .nojekyll
+          git config user.name lc-bot && git config user.email lc-bot@users.noreply.github.com
+          git add -A && git commit -qm "Rendus validés renommés (s/lcs-N.jpg)" && git push
