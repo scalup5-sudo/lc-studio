@@ -1,0 +1,19 @@
+name: dump
+on:
+  workflow_dispatch:
+    inputs:
+      cols:
+        default: 'au-frais au-calme au-chaud sommeil'
+permissions:
+  contents: write
+jobs:
+  d:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: node tools/dump.mjs ${{ inputs.cols }}
+      - run: |
+          git config user.name lc-bot && git config user.email lc-bot@users.noreply.github.com
+          git checkout -b dump && git add -f dump && git commit -m dump && git push -f origin dump
