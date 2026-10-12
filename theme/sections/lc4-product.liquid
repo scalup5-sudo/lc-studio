@@ -68,8 +68,31 @@
     {%- if rv and rc > 0 -%}
       <a class="lc4p-rating" href="#lc4p-avis">★ {{ rv.rating | round: 1 | replace: '.', ',' }}/5 <span>· {{ rc }} avis</span></a>
     {%- endif -%}
-    {%- assign pitch = product.metafields.custom.pitch.value -%}
-    {%- if pitch.k != blank -%}<p class="lc4p-hook">{{ pitch.k }}</p>{%- endif -%}
+    {%- liquid
+      assign pl = product.metafields.custom.pitch.value | newline_to_br | split: '<br />'
+      assign p_k = ''
+      assign p_s = ''
+      assign p_c = ''
+      assign p_b = ''
+      for l in pl
+        assign t = l | strip
+        if t == blank
+          continue
+        endif
+        assign f = t | slice: 0, 2
+        if f == '* '
+          assign p_b = p_b | append: t | append: '§'
+        elsif f == '= '
+          assign p_c = t | remove_first: '= '
+        elsif p_k == ''
+          assign p_k = t
+        else
+          assign p_s = t
+        endif
+      endfor
+      assign p_items = p_b | split: '§'
+    -%}
+    {%- if p_k != '' -%}<p class="lc4p-hook">{{ p_k }}</p>{%- endif -%}
 
     <p class="lc4p-price">
       <span data-lc4p-price>{{ v.price | money }}</span>
@@ -106,11 +129,11 @@
 
     <details class="lc4p-acc" open>
       <summary>Description</summary>
-      {%- if pitch.s != blank -%}
+      {%- if p_s != '' -%}
         <div class="lc4p-pitch">
-          <p class="lc4p-pitch__s">{{ pitch.s }}</p>
-          {%- if pitch.b.size > 0 -%}<ul>{%- for b in pitch.b -%}<li><strong>{{ b[0] }}</strong> {{ b[1] }}</li>{%- endfor -%}</ul>{%- endif -%}
-          {%- if pitch.c != blank -%}<p class="lc4p-pitch__c">{{ pitch.c }}</p>{%- endif -%}
+          <p class="lc4p-pitch__s">{{ p_s }}</p>
+          {%- if p_items.size > 0 -%}<ul>{%- for it in p_items -%}{%- assign parts = it | remove_first: '* ' | split: ' | ' -%}<li>{%- if parts.size > 1 -%}<strong>{{ parts[0] }}</strong> {{ parts[1] }}{%- else -%}{{ parts[0] }}{%- endif -%}</li>{%- endfor -%}</ul>{%- endif -%}
+          {%- if p_c != '' -%}<p class="lc4p-pitch__c">{{ p_c }}</p>{%- endif -%}
         </div>
       {%- endif -%}
       {%- assign desc = product.description | remove: '<p>Choisissez le modèle dans les options de la fiche. Les dimensions, le format et le contenu peuvent varier selon la variante sélectionnée.</p>' | replace: '<h3>Caractéristiques du produit</h3>', '<h3>Les détails</h3>' -%}
