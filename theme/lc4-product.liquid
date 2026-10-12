@@ -1,0 +1,152 @@
+{%- liquid
+  assign u_frais = collections['au-frais'].url | default: '/collections/au-frais'
+  assign u_chaud = collections['au-chaud'].url | default: '/collections/au-chaud'
+  assign u_calme = collections['au-calme'].url | default: '/collections/au-calme'
+  assign v = product.selected_or_first_available_variant
+  assign skip = 'au-frais,au-chaud,au-calme,all,frontpage,black-friday,pmax-q4-profit-discovery,pmax-q4-profit-discovery-2026,pmax-q4-profit-proven-2026,pmax-q4-profit-winners' | split: ','
+  assign rayon = nil
+  for c in product.collections
+    unless skip contains c.handle
+      assign rayon = c
+      break
+    endunless
+  endfor
+  assign rv = product.metafields.reviews.rating.value
+  assign rc = product.metafields.reviews.rating_count.value | default: 0
+  assign name_main = product.title | split: ' – ' | first
+  assign name_sub = product.title | remove_first: name_main | remove_first: ' – '
+-%}
+<div class="lc lc4 lc4p" id="lc-top" data-temp="calme">
+<script>document.getElementById('lc-top').classList.add('lc-js');</script>
+{%- render 'lc4-header', u_frais: u_frais, u_chaud: u_chaud, u_calme: u_calme -%}
+
+<nav class="lc-wrap lc4p-crumbs" aria-label="Fil d’Ariane">
+  <a href="{{ routes.root_url }}">Accueil</a>
+  {%- if rayon -%}<span aria-hidden="true">/</span><a href="{{ rayon.url }}">{{ rayon.title }}</a>{%- endif -%}
+</nav>
+
+<section class="lc-wrap lc4p-main" aria-labelledby="lc4p-title">
+  <div class="lc4p-gallery">
+    {%- liquid
+      assign studio_m = nil
+      for m in product.media
+        if m.alt contains 'Le Comptoir studio'
+          assign studio_m = m
+          break
+        endif
+      endfor
+      assign shots = product.media | where: 'media_type', 'image'
+      assign shown_n = 0
+    -%}
+    {%- if studio_m -%}
+      <figure class="lc4p-shot lc4p-shot--main is-studio">
+        {{ studio_m | image_url: width: 1400 | image_tag: widths: '500,800,1100,1400', sizes: '(min-width: 1000px) 640px, 100vw', loading: 'eager', fetchpriority: 'high', alt: product.title }}
+      </figure>
+      {%- assign shown_n = 1 -%}
+    {%- endif -%}
+    {%- for m in shots -%}
+      {%- if shown_n < 7 and m.id != studio_m.id -%}
+        {%- assign shown_n = shown_n | plus: 1 -%}
+        <figure class="lc4p-shot{% if shown_n == 1 %} lc4p-shot--main{% endif %}">
+          {%- assign alt = m.alt | default: product.title -%}
+          {%- if shown_n == 1 -%}
+            {{ m | image_url: width: 1400 | image_tag: widths: '500,800,1100,1400', sizes: '(min-width: 1000px) 640px, 100vw', loading: 'eager', fetchpriority: 'high', alt: alt }}
+          {%- else -%}
+            {{ m | image_url: width: 1000 | image_tag: widths: '400,600,800,1000', sizes: '(min-width: 1000px) 320px, 86vw', loading: 'lazy', alt: alt }}
+          {%- endif -%}
+        </figure>
+      {%- endif -%}
+    {%- else -%}
+      <figure class="lc4p-shot lc4p-shot--main"></figure>
+    {%- endfor -%}
+  </div>
+
+  <div class="lc4p-info">
+    {%- if rayon -%}<p class="lc4p-rayon"><a href="{{ rayon.url }}">{{ rayon.title }}</a></p>{%- endif -%}
+    <h1 id="lc4p-title" class="lc4p-title">{{ name_main }}{%- if name_sub != blank -%}<span class="lc4p-sub">{{ name_sub }}</span>{%- endif -%}</h1>
+    {%- if rv and rc > 0 -%}
+      <a class="lc4p-rating" href="#lc4p-avis">★ {{ rv.rating | round: 1 | replace: '.', ',' }}/5 <span>· {{ rc }} avis</span></a>
+    {%- endif -%}
+
+    <p class="lc4p-price">
+      <span data-lc4p-price>{{ v.price | money }}</span>
+      <s data-lc4p-compare{% unless v.compare_at_price > v.price %} hidden{% endunless %}>{{ v.compare_at_price | money }}</s>
+    </p>
+    <p class="lc4p-klarna">ou 3 × <span data-lc4p-klarna>{{ v.price | divided_by: 3 | money }}</span> avec Klarna</p>
+
+    {%- form 'product', product, class: 'lc4p-form' -%}
+      {%- unless product.has_only_default_variant -%}
+        <label class="lc4p-label" for="lc4p-variant">{{ product.options | join: ' · ' }}</label>
+        <div class="lc4p-select">
+          <select id="lc4p-variant" name="id" data-lc4p-variant>
+            {%- for var in product.variants -%}
+              <option value="{{ var.id }}"{% if var.id == v.id %} selected{% endif %}{% unless var.available %} disabled{% endunless %}>{{ var.title }} — {{ var.price | money }}{% unless var.available %} (épuisé){% endunless %}</option>
+            {%- endfor -%}
+          </select>
+        </div>
+      {%- else -%}
+        <input type="hidden" name="id" value="{{ v.id }}">
+      {%- endunless -%}
+      <div class="lc4p-buy">
+        <label class="lc-sr" for="lc4p-qty">Quantité</label>
+        <input id="lc4p-qty" class="lc4p-qty" type="number" name="quantity" value="1" min="1" max="20">
+        <button type="submit" class="lc-btn lc4-btn--dark lc4p-add" data-lc4p-add{% unless v.available %} disabled{% endunless %}>{% if v.available %}Ajouter au panier{% else %}Bientôt de retour{% endif %}</button>
+      </div>
+    {%- endform -%}
+
+    <ul class="lc4p-reassure">
+      <li><strong>Livrée en 3 à 8 jours</strong> selon l’article. Point relais dès 3,90&nbsp;€, offert dès 69&nbsp;€ en France.</li>
+      <li><strong>14 jours</strong> pour changer d’avis après réception.</li>
+      <li><strong>Paiement sécurisé</strong>, en 1 fois ou en 3 fois avec Klarna.</li>
+      <li><strong>Une question ?</strong> <a href="tel:+33183642749">01 83 64 27 49</a> ou <a href="mailto:contact@comptoir-beaute-sante.com">par e-mail</a>.</li>
+    </ul>
+
+    <details class="lc4p-acc" open>
+      <summary>Description</summary>
+      <div class="lc4p-rte">{{ product.description }}</div>
+    </details>
+    <details class="lc4p-acc">
+      <summary>Livraison et retours</summary>
+      <div class="lc4p-rte">
+        <p>Cet article est expédié directement par notre partenaire. Comptez 3 à 8 jours selon le pays, la date de commande et l’article. Livraison en point relais dès 3,90&nbsp;€, offerte dès 69&nbsp;€ en France.</p>
+        <p>Vous avez 14 jours après réception pour nous retourner l’article. <a href="/policies/refund-policy">Lire la politique de retour</a>.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="lc-wrap lc4p-reviews" id="lc4p-avis" aria-label="Avis clients">
+  {%- render 'ag-product-page-widget' -%}
+</section>
+
+{%- if rayon -%}
+<section class="lc-wrap lc4-block" aria-labelledby="lc4p-more-title">
+  <div class="lc4-head">
+    <h2 class="lc-h2" id="lc4p-more-title">Dans le même <em>rayon.</em></h2>
+    <a class="lc4-more" href="{{ rayon.url }}">Tout le rayon {{ rayon.title | downcase }}</a>
+  </div>
+  <div class="lc4-grid lc4-grid--4">
+    {%- assign shown = 0 -%}
+    {%- for p in rayon.products limit: 12 -%}
+      {%- if p.id != product.id and p.available and shown < 4 -%}
+        {%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 320px, 46vw' -%}
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+<script type="application/ld+json">{{ product | structured_data }}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":{{ request.origin | append: routes.root_url | json }}}{%- if rayon -%},{"@type":"ListItem","position":2,"name":{{ rayon.title | json }},"item":{{ request.origin | append: rayon.url | json }}}{%- endif -%},{"@type":"ListItem","position":{% if rayon %}3{% else %}2{% endif %},"name":{{ product.title | json }},"item":{{ request.origin | append: product.url | json }}}]}</script>
+<script type="application/json" data-lc4p-variants>{{ product.variants | json }}</script>
+{%- render 'lc-bottom', s: section.settings, hide_dehors: true -%}
+</div>
+
+{% schema %}
+{
+  "name": "Comptoir v4 Produit",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}
