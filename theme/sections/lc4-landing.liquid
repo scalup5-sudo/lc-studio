@@ -106,7 +106,7 @@
     </div>
     <div class="lc4-proof__rating"><div class="grc-site-rating"></div></div>
   </div>
-  <div class="lc4-proof__jdgm">{%- for block in section.blocks -%}{%- render block -%}{%- endfor -%}</div>
+  <div class="lc4-proof__jdgm">{% for block in section.blocks %}{% render block %}{% endfor %}</div>
 </section>
 
 {%- render 'lc-thermo', s: s, c_frais: c_frais, c_calme: c_calme, c_chaud: c_chaud, u_frais: u_frais, u_calme: u_calme, u_chaud: u_chaud -%}
