@@ -2,12 +2,14 @@ name: studio
 on:
   workflow_dispatch:
   push:
-    paths: ['jobs/**']
+    paths:
+      - 'jobs/**'
 permissions:
   contents: write
 jobs:
   shoot:
     runs-on: ubuntu-latest
+    timeout-minutes: 240
     strategy:
       fail-fast: false
       matrix:
@@ -15,11 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
+        with:
+          python-version: '3.11'
       - run: pip install "rembg[cpu]==2.0.59" pillow
       - run: python process.py jobs/source.txt ${{ matrix.shard }} 30
       - uses: actions/upload-artifact@v4
-        with: { name: out-${{ matrix.shard }}, path: out/, retention-days: 3 }
+        with:
+          name: out-${{ matrix.shard }}
+          path: out/
+          retention-days: 3
   commit:
     needs: shoot
     if: always()
@@ -27,9 +33,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
-        with: { path: tmp, pattern: out-*, merge-multiple: true }
+        with:
+          path: tmp
+          pattern: out-*
+          merge-multiple: true
       - run: |
           mkdir -p out && cp -r tmp/* out/
-          git config user.name "lc-studio" && git config user.email "studio@users.noreply.github.com"
-          git add out && git commit -m "Rendus studio" || echo "rien à committer"
+          git config user.name "lc-studio"
+          git config user.email "studio@users.noreply.github.com"
+          git add out
+          git commit -m "Rendus studio" || echo "rien"
           for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
