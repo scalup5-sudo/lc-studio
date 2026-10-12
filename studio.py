@@ -46,6 +46,27 @@ def studio(src_bytes):
     edges = sum([bbox[0] <= 2, bbox[1] <= 2, bbox[2] >= im.width - 2, bbox[3] >= im.height - 2])
     if cov > .70 or cov < .05 or edges >= 2:
         return None, f'refusé (couverture {cov:.2f}, bords {edges})'
+    # contrôle qualité : un seul objet net, pas de morceaux éparpillés (infographies, montages)
+    import numpy as np
+    from scipy import ndimage
+    m = np.array(a.resize((256, 256))) > 128
+    lab, nb = ndimage.label(m)
+    if nb == 0:
+        return None, 'rien détecté'
+    sizes = np.bincount(lab.ravel())[1:]
+    tot = sizes.sum(); big = sizes.max()
+    sig = int((sizes > tot * 0.02).sum())
+    if big / tot < 0.88 or sig > 2:
+        return None, f'refusé (fragments {big/tot:.2f}, {sig} morceaux)'
+    # trous : un objet plein, pas une découpe en dentelle
+    filled = ndimage.binary_fill_holes(lab == (sizes.argmax() + 1)).sum()
+    if big / filled < 0.80:
+        return None, f'refusé (découpe trouée {big/filled:.2f})'
+    solid = big / float(((lab == (sizes.argmax() + 1)).any(0).sum()) * ((lab == (sizes.argmax() + 1)).any(1).sum()) or 1)
+    if solid < 0.22:
+        return None, f'refusé (forme trop mince {solid:.2f})'
+    if (bw * bh) / float(im.width * im.height) < 0.06:
+        return None, 'refusé (objet trop petit dans la photo)'
     obj = cut.crop(bbox)
     scale = min(SIZE * .74 / bw, SIZE * .72 / bh)
     obj = obj.resize((max(1, int(bw * scale)), max(1, int(bh * scale))), Image.LANCZOS)
