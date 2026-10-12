@@ -34,15 +34,15 @@
       {%- liquid
         case n
           when 1
-            assign hp = s.hero_frais
+            assign hp = s.heroes[0]
             assign deg = '18'
             assign note = 'Pour la chambre, l’été'
           when 2
-            assign hp = s.hero_calme
+            assign hp = s.heroes[1]
             assign deg = '21'
             assign note = 'Pour ralentir le soir'
           else
-            assign hp = s.hero_chaud
+            assign hp = s.heroes[2]
             assign deg = '26'
             assign note = 'Notre meilleure vente'
         endcase
@@ -158,9 +158,7 @@
   "name": "Comptoir v4 Vitrine",
   "tag": "div",
   "settings": [
-    { "type": "product", "id": "hero_frais", "label": "Héros 18° Au frais" },
-    { "type": "product", "id": "hero_calme", "label": "Héros 21° Au calme" },
-    { "type": "product", "id": "hero_chaud", "label": "Héros 26° Au chaud" },
+    { "type": "product_list", "id": "heroes", "label": "Héros : 18° Au frais, 21° Au calme, 26° Au chaud (dans cet ordre)", "limit": 3 },
     { "type": "product_list", "id": "bestsellers", "label": "Les plus vendus", "limit": 8 },
     { "type": "product_list", "id": "the_products", "label": "L'heure du thé", "limit": 10 },
     { "type": "product_list", "id": "dos_products", "label": "Bien assis, bien dormi", "limit": 10 },
