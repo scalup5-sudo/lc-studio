@@ -30,7 +30,8 @@
     {%- liquid
       assign studio_m = nil
       for m in product.media
-        if m.alt contains 'Le Comptoir studio'
+        assign msrc = m.preview_image.src | default: ''
+        if msrc contains '/lcs-' or m.alt contains 'Le Comptoir studio'
           assign studio_m = m
           break
         endif
