@@ -1,0 +1,49 @@
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+start items 0 
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+theiere-verre-900ml-infuseur-magnetique button 1 false select 0
+RESP 302 POST https://comptoir-sante-beaute.com/cart/add
+RESP 200 GET https://comptoir-sante-beaute.com/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-shopify-custom-pixel@0530/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-77594890@1/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+url after https://comptoir-sante-beaute.com/cart
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+after theiere-verre-900ml-infuseur-magnetique items 1 theiere-verre-900ml-infuseur-magnetique x1
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+ventilateur-colonne-oscillant-silencieux button 1 false select 1
+RESP 302 POST https://comptoir-sante-beaute.com/cart/add
+RESP 200 GET https://comptoir-sante-beaute.com/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-77594890@1/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-shopify-custom-pixel@0530/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+url after https://comptoir-sante-beaute.com/cart
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+after ventilateur-colonne-oscillant-silencieux items 2 ventilateur-colonne-oscillant-silencieux x1 | theiere-verre-900ml-infuseur-magnetique x1
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+couverture-lestee-7-11-15kg-grandes-dimensions button 1 false select 1
+RESP 302 POST https://comptoir-sante-beaute.com/cart/add
+RESP 200 GET https://comptoir-sante-beaute.com/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-77594890@1/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-shopify-custom-pixel@0530/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+url after https://comptoir-sante-beaute.com/cart
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+after couverture-lestee-7-11-15kg-grandes-dimensions items 3 couverture-lestee-7-11-15kg-grandes-dimensions x1 | ventilateur-colonne-oscillant-silencieux x1 | theiere-verre-900ml-infuseur-magnetique x1
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+card buttons 9
+RESP 302 POST https://comptoir-sante-beaute.com/cart/add
+RESP 200 GET https://comptoir-sante-beaute.com/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-77594890@1/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-shopify-custom-pixel@0530/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+url after card https://comptoir-sante-beaute.com/cart
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+after card items 4 theiere-en-verre-borosilicate-avec-infuseur x1 | couverture-lestee-7-11-15kg-grandes-dimensions x1 | ventilateur-colonne-oscillant-silencieux x1 | theiere-verre-900ml-infuseur-magnetique x1
+RESP 302 GET https://comptoir-sante-beaute.com/cart?preview_theme_id=195111911690
+RESP 200 GET https://comptoir-sante-beaute.com/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-77594890@1/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/web-pixels@7ec887c8w14f9f074p854094e1m1370c602/custom/web-pixel-shopify-custom-pixel@0530/sandbox/modern/cart
+RESP 200 GET https://comptoir-sante-beaute.com/cart.js
+cart html lines 4
