@@ -16,5 +16,7 @@ jobs:
       - run: |
           cp cart.png tests/cart.png || true
           git config user.name lc-bot && git config user.email lc-bot@users.noreply.github.com
-          git add tests/result.txt tests/cart.png || true
-          git commit -m "Résultat test panier" && git pull --rebase -q && git push
+          git checkout -b results
+          git add -f tests/result.txt tests/cart.png || git add -f tests/result.txt
+          git commit -m "Résultat test panier"
+          git push -f origin results
