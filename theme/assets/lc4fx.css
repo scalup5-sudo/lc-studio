@@ -76,3 +76,5 @@
 .lc4-proof .jdgm-carousel-title,.lc4-proof .jdgm-carousel-title-and-link{display:none!important}
 .lc4-proof .jdgm-carousel-item__review{font-family:var(--sans,'Geist',sans-serif)}
 .lc4-rating--ag:empty{display:none}
+.lc4-proof .jdgm-star,.lc4-proof .jdgm-carousel .jdgm-star{color:#E3A04A!important}
+.lc4-proof .jdgm-carousel-wrapper{margin-top:0!important;padding-bottom:0!important}
