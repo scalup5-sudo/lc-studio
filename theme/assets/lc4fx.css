@@ -63,3 +63,16 @@
  .lc4-more{background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;text-decoration:none;padding-bottom:3px;transition:background-size .5s var(--ease)}
  .lc4-more:hover{background-size:0 1px;background-position:100% 100%}
 }
+/* Preuve sociale : Avis Garantis + Judge.me */
+.lc-avis{padding:clamp(64px,9vw,120px) 0 clamp(24px,4vw,48px);text-align:center;overflow:hidden}
+.lc-avis__title{margin:0;font-family:var(--serif,'Instrument Serif',serif);font-weight:400;font-size:clamp(36px,4.6vw,68px);line-height:1;letter-spacing:-.02em;color:var(--encre,#16130F)}
+.lc-avis__title em{color:var(--terre,#B4471F)}
+.lc-avis__rating{display:flex;justify-content:center;margin:22px 0 30px;min-height:24px}
+.lc-avis__carousel{max-width:1240px;margin:0 auto;padding:0 12px;min-height:200px}
+.lc-avis__carousel iframe{width:100%!important;border:0}
+.lc4-proof .lc4-head{align-items:center}
+.lc4-proof__rating{min-height:24px}
+.lc4-proof__jdgm{min-height:120px}
+.lc4-proof .jdgm-carousel-title,.lc4-proof .jdgm-carousel-title-and-link{display:none!important}
+.lc4-proof .jdgm-carousel-item__review{font-family:var(--sans,'Geist',sans-serif)}
+.lc4-rating--ag:empty{display:none}

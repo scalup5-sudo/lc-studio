@@ -40,8 +40,8 @@
     {%- if request.page_type == 'product' -%}
       {{ 'lc4p.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'lc4p.js' | asset_url }}" defer></script>
-      <script id="grc-widgets" src="https://widgets.guaranteed-reviews.com/static/widgets.min.js" data-public-key="8f78b9356230a335da2eb008df7cd044" data-lang="auto" defer></script>
     {%- endif -%}
+    <script id="grc-widgets" src="https://widgets.guaranteed-reviews.com/static/widgets.min.js" data-public-key="8f78b9356230a335da2eb008df7cd044" data-lang="auto" defer></script>
     <script src="{{ 'lc.js' | asset_url }}" defer></script>
     <script src="{{ 'lc4.js' | asset_url }}" defer></script>
     {{ content_for_header }}

@@ -1,0 +1,45 @@
+{
+  "layout": "lecomptoir",
+  "sections": {
+    "lc4": {
+      "type": "lc4-landing",
+      "blocks": {
+        "judgeme_carousel": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": { "maxwidth": 1080 }
+        }
+      },
+      "block_order": ["judgeme_carousel"],
+      "settings": {
+        "hero_frais": "ventilateur-colonne-oscillant-silencieux",
+        "hero_calme": "couverture-lestee-7-11-15kg-grandes-dimensions",
+        "hero_chaud": "theiere-verre-900ml-infuseur-magnetique",
+        "bestsellers": [
+          "theiere-verre-900ml-infuseur-magnetique",
+          "ventilateur-colonne-oscillant-silencieux",
+          "ventilateur-de-climatiseur-portable-280w",
+          "lit-pliant-inclinable-le-confort-reinvente-ou-que-vous-soyez"
+        ],
+        "the_products": [
+          "theiere-retro-en-fonte-l-elegance-de-la-tradition",
+          "theiere-en-fonte-gianghts-elegance-et-tradition-pour-vos-moments-de-degustation",
+          "theiere-en-verre-moderne-avec-manche-en-bois-600-ml",
+          "theiere-en-verre-borosilicate-300ml-l-art-du-the-reinvente",
+          "theiere-en-fonte-avec-infuseur-en-acier-inoxydable"
+        ],
+        "dos_products": [
+          "oreiller-cervical-ergonomique-memoire-de-forme",
+          "coussin-de-soutien-aux-lombaires",
+          "coussin-de-sommeil-pour-les-genoux",
+          "coussin-de-siege-confortable-en-mousse",
+          "banc-de-meditation-pliable-en-bois-pour-le-yoga"
+        ],
+        "frais_image": "shopify://shop_images/0003-38799341830140535.jpg",
+        "calme_image": "shopify://shop_images/0003-1690494502284432668.jpg",
+        "chaud_image": "shopify://shop_images/0005-38799341830140535.jpg",
+        "dehors_image": "shopify://shop_images/0004-38799341830140535.jpg"
+      }
+    }
+  },
+  "order": ["lc4"]
+}

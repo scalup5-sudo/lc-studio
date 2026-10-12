@@ -1,0 +1,59 @@
+{%- comment -%} Bas de page LE COMPTOIR — params: s (section.settings), hide_dehors. Engagements vérifiés le 12/10/2026 : Mondial Relay offert dès 69 € (France), retours 14 jours, Klarna 3x, code BIENVENUE10 (−10 %, une fois par client). Carrousel Avis Garantis sur toutes les pages. {%- endcomment -%}
+{%- assign c_frais = collections['au-frais'] -%}
+{%- unless hide_dehors -%}
+<section class="lc-dehors" aria-label="Vivre dehors">
+  <div class="lc-dehors__media" data-lc-parallax>
+    {%- if s.dehors_image -%}{{ s.dehors_image | image_url: width: 2400 | image_tag: widths: '750,1200,1800,2400', sizes: '100vw', loading: 'lazy', alt: s.dehors_image.alt }}{%- endif -%}
+  </div>
+  <div class="lc-dehors__shade" aria-hidden="true"></div>
+  <div class="lc-wrap lc-dehors__inner">
+    <p class="lc-kicker lc-reveal">(05) — Dehors aussi</p>
+    <h2 class="lc-h2 lc-reveal">L’été se règle <em>sous la treille.</em></h2>
+    <p class="lc-reveal">Brumisateurs, ventilateurs, assises et coussins pour profiter de la terrasse aux heures chaudes.</p>
+    <a class="lc-btn lc-btn--light lc-reveal" href="{{ c_frais.url | default: '/collections/au-frais' }}">Voir la sélection été <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+{%- endunless -%}
+
+<section class="lc-avis" aria-labelledby="lc-avis-title">
+  <div class="lc-wrap">
+    <h2 class="lc-avis__title" id="lc-avis-title">Laissons nos clients <em>parler pour nous.</em></h2>
+    <div class="lc-avis__rating"><div class="grc-site-rating"></div></div>
+  </div>
+  <div class="lc-avis__carousel"><div class="grc-site-iframe" data-type="horizontal"></div></div>
+</section>
+
+<section class="lc-wrap lc-promises" aria-label="Nos engagements">
+  <div class="lc-promise lc-reveal"><strong>69&nbsp;€</strong><span>Livraison offerte en point relais en France dès 69&nbsp;€, sinon dès 3,90&nbsp;€. Comptez 3 à 8&nbsp;jours selon l’article</span></div>
+  <div class="lc-promise lc-reveal" style="--d:.08s"><strong>14&nbsp;j</strong><span>Pour changer d’avis après réception</span></div>
+  <div class="lc-promise lc-reveal" style="--d:.16s"><strong>3x</strong><span>Paiement en 3 fois avec Klarna</span></div>
+  <div class="lc-promise lc-reveal" style="--d:.24s"><strong><a href="tel:+33183642749">01&nbsp;83&nbsp;64&nbsp;27&nbsp;49</a></strong><span>Service client. Ou par e-mail : <a href="mailto:contact@comptoir-beaute-sante.com">contact@comptoir-beaute-sante.com</a></span></div>
+</section>
+
+<footer class="lc-foot">
+  <div class="lc-wrap">
+    <div class="lc-foot__top">
+      <div class="lc-news">
+        <p class="lc-news__title">La lettre du Comptoir.<br><em>−10&nbsp;% sur votre première commande.</em></p>
+        {%- form 'customer', id: 'lc-newsletter', class: 'lc-news__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p class="lc-news__ok" role="status">Merci ! Votre code de bienvenue : <strong>BIENVENUE10</strong>, −10&nbsp;% sur votre première commande.</p>
+          {%- else -%}
+            <label for="lc-mail" class="lc-sr">Adresse e-mail</label>
+            <input id="lc-mail" type="email" name="contact[email]" placeholder="votre@email.fr" autocomplete="email" required>
+            <button type="submit">S’inscrire</button>
+            {%- if form.errors -%}<p class="lc-news__err" role="alert">Vérifiez votre adresse e-mail.</p>{%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+      <div class="lc-foot__cols">
+        <div><span>Univers</span><a href="/collections/au-frais">Au frais</a><a href="/collections/au-chaud">Au chaud</a><a href="/collections/au-calme">Au calme</a><a href="{{ routes.all_products_collection_url }}">Tout le Comptoir</a></div>
+        <div><span>Service</span><a href="/policies/shipping-policy">Livraison</a><a href="/policies/refund-policy">Retours</a><a href="/policies/contact-information">Contact</a><a href="tel:+33183642749">01 83 64 27 49</a><a href="{{ routes.account_url }}">Mon compte</a></div>
+        <div><span>Légal</span><a href="/policies/legal-notice">Mentions légales</a><a href="/policies/terms-of-sale">CGV</a><a href="/policies/privacy-policy">Confidentialité</a></div>
+      </div>
+    </div>
+    <div class="lc-foot__word" aria-hidden="true">Le Comptoir</div>
+    <div class="lc-foot__base"><span>© {{ 'now' | date: '%Y' }} Le Comptoir</span><span>Vivre à la bonne température</span></div>
+  </div>
+</footer>

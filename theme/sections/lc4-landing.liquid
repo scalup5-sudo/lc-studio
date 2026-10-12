@@ -98,6 +98,17 @@
   </div>
 </section>
 
+<section class="lc-wrap lc4-block lc4-proof" id="lc4-avis" aria-labelledby="lc4-avis-title">
+  <div class="lc4-head">
+    <div>
+      <h2 class="lc-h2" id="lc4-avis-title">Ce qu’en disent <em>nos clients.</em></h2>
+      <p class="lc4-sub">Les avis recueillis par la Société des Avis Garantis, organisme indépendant, et ceux laissés sur nos fiches produits.</p>
+    </div>
+    <div class="lc4-proof__rating"><div class="grc-site-rating"></div></div>
+  </div>
+  <div class="lc4-proof__jdgm">{%- for block in section.blocks -%}{%- render block -%}{%- endfor -%}</div>
+</section>
+
 {%- render 'lc-thermo', s: s, c_frais: c_frais, c_calme: c_calme, c_chaud: c_chaud, u_frais: u_frais, u_calme: u_calme, u_chaud: u_chaud -%}
 
 <section class="lc4-band lc4-band--the" aria-labelledby="lc4-the-title">
@@ -158,6 +169,7 @@
     { "type": "image_picker", "id": "chaud_image", "label": "Univers Au chaud" },
     { "type": "image_picker", "id": "dehors_image", "label": "Jardin" }
   ],
+  "blocks": [{ "type": "@app" }],
   "presets": [{ "name": "Comptoir v4 Vitrine" }]
 }
 {% endschema %}

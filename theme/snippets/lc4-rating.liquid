@@ -1,2 +1,7 @@
-{%- comment -%} Note Judge.me (badge pré-rendu par l'app). Param : p {%- endcomment -%}
-<div class="lc4-rating jdgm-widget jdgm-preview-badge" data-id="{{ p.id }}" data-auto-install="false">{{ p.metafields.judgeme.badge }}</div>
+{%- comment -%} Note Judge.me (badge pré-rendu par l'app). Sans avis Judge.me, on affiche les étoiles Avis Garantis du produit s'il en a. Param : p {%- endcomment -%}
+{%- assign jb = p.metafields.judgeme.badge -%}
+{%- if jb == blank or jb contains "data-number-of-reviews='0'" or jb contains 'data-number-of-reviews="0"' -%}
+<div class="lc4-rating lc4-rating--ag grc-category-stars" data-product-id="{{ p.id }}"></div>
+{%- else -%}
+<div class="lc4-rating jdgm-widget jdgm-preview-badge" data-id="{{ p.id }}" data-auto-install="false">{{ jb }}</div>
+{%- endif -%}
