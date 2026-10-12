@@ -1,0 +1,14 @@
+name: mapping
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  map:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 mapping.py
+      - run: |
+          git config user.name lc-bot && git config user.email lc-bot@users.noreply.github.com
+          git checkout -b mapdata && git add -f jobs/map.tsv && git commit -m map && git push -f origin mapdata
