@@ -1,6 +1,8 @@
 name: carttest
 on:
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -10,9 +12,9 @@ jobs:
         with:
           node-version: '20'
       - run: npm i playwright@1.47.2 && npx playwright install --with-deps chromium
-      - run: node tests/cart.mjs
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cart
-          path: cart.png
+      - run: node tests/cart.mjs > tests/result.txt 2>&1 || true
+      - run: |
+          cp cart.png tests/cart.png || true
+          git config user.name lc-bot && git config user.email lc-bot@users.noreply.github.com
+          git add tests/result.txt tests/cart.png || true
+          git commit -m "Résultat test panier" && git pull --rebase -q && git push
