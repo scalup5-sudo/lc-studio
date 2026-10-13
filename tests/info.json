@@ -1,0 +1,32 @@
+{
+ "m-0": {
+  "fixed": [
+   "P#.lc4-annonce top=0 bottom=34 left=0 w=390",
+   "HEADER#.lc-nav is-solid top=44 bottom=98 left=12 w=366",
+   "DIV#.lc4p-sticky is-on top=773 bottom=844 left=0 w=390",
+   "SHOPIFY-CHAT#. top=0 bottom=772 left=0 w=390",
+   "DIV#.agJsWidget top=735 bottom=791 left=0 w=52"
+  ],
+  "h": 6278,
+  "jd": null,
+  "sticky": true,
+  "stickyVis": "none lc4p-sticky is-on"
+ },
+ "swap-0": {
+  "before": "https://comptoir-sante-beaute.com/cdn/shop/files/0010-1457433229155678193.jpg?v=1791807467&width=800",
+  "after": "https://comptoir-sante-beaute.com/cdn/shop/files/2_f12b08bd-0015-4c47-adcc-802311b5fc25.webp?v=1749630659&width=800"
+ },
+ "d-0": {
+  "fixed": [
+   "P#.lc4-annonce top=0 bottom=34 left=0 w=1440",
+   "HEADER#.lc-nav is-solid top=44 bottom=106 left=130 w=1180",
+   "DIV#.lc4p-sticky is-on top=829 bottom=900 left=0 w=1440",
+   "SHOPIFY-CHAT#. top=0 bottom=828 left=0 w=1440",
+   "DIV#.agJsWidget top=687 bottom=824 left=0 w=128"
+  ],
+  "h": 4728,
+  "jd": null,
+  "sticky": true,
+  "stickyVis": "none lc4p-sticky is-on"
+ }
+}
