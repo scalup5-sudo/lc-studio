@@ -1,0 +1,186 @@
+{%- comment -%}
+  LE COMPTOIR — Vitrine « Veillée » (Q4).
+  Fond nuit, lumière chaude. Les produits sont tirés des collections de saison,
+  jamais figés en dur : la page suit le catalogue sans retomber hors saison.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign c_noel = collections['boutique-de-noel']
+  assign c_cosy = collections['plaids-housses-cosy']
+  assign c_the = collections['theieres']
+  assign c_tis = collections['tisanes']
+  assign c_som = collections['sommeil']
+  assign u_noel = c_noel.url | default: '/collections/boutique-de-noel'
+  assign u_cosy = c_cosy.url | default: '/collections/plaids-housses-cosy'
+  assign u_the = c_the.url | default: '/collections/theieres'
+  assign u_chaud = collections['au-chaud'].url | default: '/collections/au-chaud'
+  assign u_calme = collections['au-calme'].url | default: '/collections/au-calme'
+  assign hero_img = s.hero_image | default: c_noel.image
+  assign star = s.vedette | default: c_noel.products.first
+-%}
+{%- comment -%} Le fond nuit est posé avant la feuille de style pour éviter un éclair clair au chargement. {%- endcomment -%}
+<style>html.lc-html,html.lc-html body{background:#141110;color:#EEE6D8}</style>
+{{ 'lc4v.css' | asset_url | stylesheet_tag }}
+<div class="lc lc4 lc4v" id="lc-top">
+<script>document.getElementById('lc-top').classList.add('lc-js');</script>
+{%- render 'lc4-header', u_frais: u_noel, u_chaud: u_chaud, u_calme: u_calme -%}
+
+<section class="lc4v-hero" aria-labelledby="lc4v-title">
+  <div class="lc4v-hero__glow" aria-hidden="true"></div>
+  <div class="lc-wrap lc4v-hero__in">
+    <div class="lc4v-hero__text">
+      <h1 class="lc4v-title" id="lc4v-title"><span>Les soirs</span> <span>s’allongent.</span> <em>Tant mieux.</em></h1>
+      <p class="lc4v-lead">Plaids lourds, couvertures lestées, théières de fonte et tisanes du soir. De quoi passer l’hiver au chaud — et de quoi l’offrir.</p>
+      <div class="lc4v-hero__ctas">
+        <a class="lc4v-btn lc4v-btn--ocre" href="{{ u_noel }}">Les cadeaux de fin d’année</a>
+        <a class="lc4v-btn lc4v-btn--line" href="#lc4v-cosy">Le rayon cocooning</a>
+      </div>
+    </div>
+
+    {%- if hero_img != blank -%}
+      <div class="lc4v-hero__panel">
+        <div class="lc4v-pane">
+          {{ hero_img | image_url: width: 1200 | image_tag: widths: '500,760,1000,1200', sizes: '(min-width: 1000px) 520px, 90vw', loading: 'eager', fetchpriority: 'high', alt: '' }}
+        </div>
+        {%- if star != blank -%}
+          <a class="lc4v-tag" href="{{ star.url }}">
+            <span class="lc4v-tag__n">{{ star.title | split: ' – ' | first }}</span>
+            <span class="lc4v-tag__p">{% if star.price_varies %}dès {% endif %}{{ star.price | money }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} Trois portes d'entrée par budget — le réflexe de celui qui cherche un cadeau sans idée précise. {%- endcomment -%}
+<section class="lc-wrap lc4v-sec" aria-labelledby="lc4v-bud-title">
+  <h2 class="lc4v-h2" id="lc4v-bud-title">Offrir, <em>sans y passer la soirée.</em></h2>
+  <div class="lc4v-budgets">
+    <a class="lc4v-bud" href="{{ u_noel }}?filter.v.price.lte=30">
+      <span class="lc4v-bud__v">moins de <b>30 €</b></span>
+      <span class="lc4v-bud__l">Le petit geste — tisanes, mugs, bougies, accessoires de thé.</span>
+    </a>
+    <a class="lc4v-bud lc4v-bud--wide" href="{{ u_noel }}?filter.v.price.gte=30&amp;filter.v.price.lte=70">
+      <span class="lc4v-bud__v">de <b>30</b> à <b>70 €</b></span>
+      <span class="lc4v-bud__l">Le cadeau qui tient la route — plaid à capuche, théière en verre, coussin chauffant.</span>
+    </a>
+    <a class="lc4v-bud" href="{{ u_noel }}?filter.v.price.gte=70">
+      <span class="lc4v-bud__v">plus de <b>70 €</b></span>
+      <span class="lc4v-bud__l">Le grand jeu — couverture lestée, soie, surmatelas.</span>
+    </a>
+  </div>
+</section>
+
+{%- if c_cosy.products_count > 0 -%}
+<section class="lc-wrap lc4v-sec" id="lc4v-cosy" aria-labelledby="lc4v-cosy-title">
+  <div class="lc4v-head">
+    <div>
+      <h2 class="lc4v-h2" id="lc4v-cosy-title">Le poids d’une <em>couverture.</em></h2>
+      <p class="lc4v-sub">Sherpa, polaire, microbilles de verre. Ce qu’on garde sur les épaules de novembre à mars.</p>
+    </div>
+    <a class="lc4v-more" href="{{ u_cosy }}">Tout le rayon</a>
+  </div>
+  <div class="lc4v-grid lc4v-grid--4">
+    {%- assign n = 0 -%}
+    {%- for p in c_cosy.products limit: 20 -%}
+      {%- if p.available and p.featured_media and n < 4 -%}
+        {%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 300px, 46vw' -%}
+        {%- assign n = n | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{%- if c_noel.products_count > 0 -%}
+<section class="lc4v-band" aria-labelledby="lc4v-noel-title">
+  <div class="lc-wrap">
+    <div class="lc4v-head">
+      <div>
+        <h2 class="lc4v-h2" id="lc4v-noel-title">La boutique <em>de Noël.</em></h2>
+        <p class="lc4v-sub">{{ c_noel.products_count }} objets choisis pour être offerts, du petit mot de fin d’année au cadeau qu’on ouvre en dernier.</p>
+      </div>
+      <a class="lc4v-more" href="{{ u_noel }}">Tout voir</a>
+    </div>
+    <div class="lc4v-grid lc4v-grid--4">
+      {%- assign n = 0 -%}
+      {%- for p in c_noel.products limit: 24 -%}
+        {%- if p.available and p.featured_media and n < 4 -%}
+          {%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 300px, 46vw' -%}
+          {%- assign n = n | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{%- if c_the.products_count > 0 -%}
+<section class="lc-wrap lc4v-sec" aria-labelledby="lc4v-the-title">
+  <div class="lc4v-head">
+    <div>
+      <h2 class="lc4v-h2" id="lc4v-the-title">L’heure où l’on <em>ralentit.</em></h2>
+      <p class="lc4v-sub">Fonte, verre borosilicate, infuseurs intégrés — et {{ c_tis.products_count }} thés et tisanes à y faire passer.</p>
+    </div>
+    <a class="lc4v-more" href="{{ u_the }}">Les théières</a>
+  </div>
+  <div class="lc4v-grid lc4v-grid--5">
+    {%- assign n = 0 -%}
+    {%- for p in c_the.products limit: 20 -%}
+      {%- if p.available and p.featured_media and n < 5 -%}
+        {%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 240px, 46vw' -%}
+        {%- assign n = n | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{%- if c_som.products_count > 0 -%}
+<section class="lc-wrap lc4v-sec" aria-labelledby="lc4v-som-title">
+  <div class="lc4v-head">
+    <div>
+      <h2 class="lc4v-h2" id="lc4v-som-title">Et pour la nuit <em>qui suit.</em></h2>
+      <p class="lc4v-sub">Oreillers ergonomiques, soie, couettes d’hiver. Le rayon qui fait revenir nos clients.</p>
+    </div>
+    <a class="lc4v-more" href="{{ c_som.url }}">Tout le sommeil</a>
+  </div>
+  <div class="lc4v-grid lc4v-grid--4">
+    {%- assign n = 0 -%}
+    {%- for p in c_som.products limit: 24 -%}
+      {%- if p.available and p.featured_media and n < 4 -%}
+        {%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 300px, 46vw' -%}
+        {%- assign n = n | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+<section class="lc-wrap lc4v-sec lc4v-proof" aria-labelledby="lc4v-avis-title">
+  <div class="lc4v-head">
+    <div>
+      <h2 class="lc4v-h2" id="lc4v-avis-title">Ce qu’en disent <em>nos clients.</em></h2>
+      <p class="lc4v-sub">Avis recueillis par la Société des Avis Garantis, organisme indépendant, et avis laissés sur nos fiches produits.</p>
+    </div>
+    <div class="lc4v-proof__rating"><div class="grc-site-rating"></div></div>
+  </div>
+  <div class="lc4v-proof__jdgm">{% for block in section.blocks %}{% render block %}{% endfor %}</div>
+</section>
+
+{%- render 'lc-bottom', s: s, hide_dehors: true -%}
+</div>
+
+{% schema %}
+{
+  "name": "Comptoir Veillée (Q4)",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "hero_image", "label": "Visuel d'ouverture (à défaut : la bannière de la Boutique de Noël)" },
+    { "type": "product", "id": "vedette", "label": "Produit épinglé sur le visuel d'ouverture" }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Comptoir Veillée (Q4)" }]
+}
+{% endschema %}
