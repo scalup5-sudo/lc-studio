@@ -1,0 +1,256 @@
+{%- liquid
+  assign s = section.settings
+  assign c_frais = collections['au-frais']
+  assign c_chaud = collections['au-chaud']
+  assign c_calme = collections['au-calme']
+  assign u_frais = c_frais.url | default: '/collections/au-frais'
+  assign u_chaud = c_chaud.url | default: '/collections/au-chaud'
+  assign u_calme = c_calme.url | default: '/collections/au-calme'
+  assign cats = 'ventilateurs|rafraichisseur-d-air|theieres|tisanes|sommeil|plaids-housses-cosy|massage|dehors|boutique-de-noel' | split: '|'
+  assign cat_names = 'Ventilateurs|Climatiseurs & rafraîchisseurs|Théières & infuseurs|Thés & tisanes|Sommeil|Plaids & couvertures|Massage & détente|Dehors : jardin & terrasse|Idées cadeaux' | split: '|'
+-%}
+<div class="lc lc4" id="lc-top" data-temp="chaud">
+<script>document.getElementById('lc-top').classList.add('lc-js');</script>
+{%- render 'lc4-header', u_frais: u_frais, u_chaud: u_chaud, u_calme: u_calme -%}
+
+<section class="lc4-hero lc-wrap" aria-labelledby="lc4-title">
+  <div class="lc4-hero__text">
+    <h1 id="lc4-title" class="lc4-hero__title">Vivre à la <em>bonne température.</em></h1>
+    <p class="lc4-hero__lead">Mieux dormir, se sentir bien chez soi, l’été comme l’hiver. Couvertures lestées, oreillers ergonomiques, ventilateurs silencieux, plaids et théières&nbsp;: plus de 1&nbsp;700 objets pour le confort de tous les jours.</p>
+    <div class="lc4-hero__ctas">
+      <a class="lc-btn lc4-btn--dark" href="#lc4-ventes">Voir les meilleures ventes</a>
+      <a class="lc-btn lc4-btn--line" href="#lc4-rayons">Parcourir les rayons</a>
+    </div>
+  </div>
+
+  <div class="lc4-thermo">
+    <div class="lc4-thermo__tabs" role="tablist" aria-label="Choisir une température">
+      <button type="button" role="tab" id="lc4-t1" aria-controls="lc4-p1" aria-selected="false" tabindex="-1" data-z="frais"><b>18°</b>Au frais</button>
+      <button type="button" role="tab" id="lc4-t2" aria-controls="lc4-p2" aria-selected="false" tabindex="-1" data-z="calme"><b>21°</b>Au calme</button>
+      <button type="button" role="tab" id="lc4-t3" aria-controls="lc4-p3" aria-selected="true" data-z="chaud"><b>26°</b>Au chaud</button>
+    </div>
+    <div class="lc4-thermo__bar" aria-hidden="true"><span></span></div>
+    {%- for n in (1..3) -%}
+      {%- liquid
+        assign hp = nil
+        for x in s.heroes
+          if forloop.index == n
+            assign hp = x
+          endif
+        endfor
+        case n
+          when 1
+            assign deg = '18'
+            assign note = 'Pour la chambre, l’été'
+          when 2
+            assign deg = '21'
+            assign note = 'Pour ralentir le soir'
+          else
+            assign deg = '26'
+            assign note = 'Notre meilleure vente'
+        endcase
+        assign load = 'lazy'
+        if n == 3
+          assign load = 'eager'
+        endif
+      -%}
+      <div class="lc4-stage" role="tabpanel" id="lc4-p{{ n }}" aria-labelledby="lc4-t{{ n }}"{% unless n == 3 %} hidden{% endunless %}>
+        {%- if hp != blank -%}
+          <a class="lc4-stage__media" href="{{ hp.url }}" tabindex="-1" aria-hidden="true">
+            <span class="lc4-stage__deg">{{ deg }}°</span>
+            {%- if hp.featured_media -%}{{ hp.featured_media | image_url: width: 1264 | image_tag: widths: '600,800,1000,1264', sizes: '(min-width: 1000px) 560px, 92vw', loading: load, alt: '' }}{%- endif -%}
+          </a>
+          <div class="lc4-stage__info">
+            <div>
+              <p class="lc4-stage__note">{{ note }}</p>
+              {%- render 'lc4-rating', p: hp -%}
+              <a class="lc4-stage__title" href="{{ hp.url }}">{{ hp.title | split: ' – ' | first }}</a>
+            </div>
+            <div class="lc4-stage__buy">
+              <span class="lc4-stage__price">{% if hp.price_varies %}<small>dès </small>{% endif %}{{ hp.price | money }}</span>
+              {%- if hp.available and hp.has_only_default_variant -%}
+                <form method="post" action="{{ routes.cart_add_url }}"><input type="hidden" name="id" value="{{ hp.selected_or_first_available_variant.id }}"><input type="hidden" name="quantity" value="1"><button type="submit" class="lc-btn lc4-btn--dark">Ajouter au panier</button></form>
+              {%- else -%}
+                <a class="lc-btn lc4-btn--dark" href="{{ hp.url }}">Voir le produit</a>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+<section class="lc-wrap lc4-rayons" id="lc4-rayons" aria-labelledby="lc4-rayons-title">
+  <h2 class="lc4-h3" id="lc4-rayons-title">Les rayons du Comptoir</h2>
+  <ul class="lc4-rayons__grid">
+    {%- for h in cats -%}
+      {%- assign col = collections[h] -%}
+      {%- assign vis = col.image | default: col.products.first.featured_media.preview_image -%}
+      <li>
+        <a class="lc4-rayon" href="/collections/{{ h }}">
+          <span class="lc4-rayon__media">
+            {%- if vis -%}{{ vis | image_url: width: 800 | image_tag: widths: '400,600,800', sizes: '(min-width: 1000px) 300px, 46vw', loading: 'lazy', alt: '' }}{%- endif -%}
+          </span>
+          <span class="lc4-rayon__body">
+            <span class="lc4-rayon__name">{{ cat_names[forloop.index0] }}</span>
+            {%- if col.products_count > 0 -%}<small>{{ col.products_count }} objets</small>{%- endif -%}
+          </span>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+
+<section class="lc-wrap lc4-block" id="lc4-ventes" aria-labelledby="lc4-ventes-title">
+  <div class="lc4-head">
+    <h2 class="lc-h2" id="lc4-ventes-title">Les plus <em>vendus.</em></h2>
+    <a class="lc4-more" href="{{ routes.all_products_collection_url }}">Tout le catalogue</a>
+  </div>
+  <div class="lc4-grid lc4-grid--4">
+    {%- for p in s.bestsellers -%}{%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 320px, 46vw' -%}{%- endfor -%}
+  </div>
+</section>
+
+<section class="lc-wrap lc4-block lc4-proof" id="lc4-avis" aria-labelledby="lc4-avis-title">
+  <div class="lc4-head">
+    <div>
+      <h2 class="lc-h2" id="lc4-avis-title">Ce qu’en disent <em>nos clients.</em></h2>
+      <p class="lc4-sub">Les avis recueillis par la Société des Avis Garantis, organisme indépendant, et ceux laissés sur nos fiches produits.</p>
+    </div>
+    <div class="lc4-proof__rating"><div class="grc-site-rating"></div></div>
+  </div>
+  <div class="lc4-proof__jdgm">{% for block in section.blocks %}{% render block %}{% endfor %}</div>
+</section>
+
+{%- render 'lc-thermo', s: s, c_frais: c_frais, c_calme: c_calme, c_chaud: c_chaud, u_frais: u_frais, u_calme: u_calme, u_chaud: u_chaud -%}
+
+<section class="lc4-band lc4-band--the" aria-labelledby="lc4-the-title">
+  <div class="lc-wrap">
+    <div class="lc4-head">
+      <div>
+        <h2 class="lc-h2" id="lc4-the-title">L’heure du <em>thé.</em></h2>
+        <p class="lc4-sub">Fonte, verre borosilicate, infuseurs intégrés. Pour les après-midi d’hiver côté fenêtre.</p>
+      </div>
+      <a class="lc4-more" href="/collections/theieres">Toutes les théières</a>
+    </div>
+    <div class="lc4-grid lc4-grid--5">
+      {%- for p in s.the_products -%}{%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 250px, 46vw' -%}{%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<section class="lc-wrap lc4-block" aria-labelledby="lc4-dos-title">
+  <div class="lc4-head">
+    <div>
+      <h2 class="lc-h2" id="lc4-dos-title">Bien assis, <em>bien dormi.</em></h2>
+      <p class="lc4-sub">Mousse à mémoire de forme, soutien de la nuque et du dos, assise pour méditer.</p>
+    </div>
+    <a class="lc4-more" href="/collections/sommeil">Tout le rayon sommeil</a>
+  </div>
+  <div class="lc4-grid lc4-grid--5">
+    {%- for p in s.dos_products -%}{%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 250px, 46vw' -%}{%- endfor -%}
+  </div>
+</section>
+
+<section class="lc-wrap lc4-block" id="lc4-noel" aria-labelledby="lc4-noel-title">
+  <div class="lc4-head">
+    <div>
+      <h2 class="lc-h2" id="lc4-noel-title">Idées cadeaux de <em>fin d’année.</em></h2>
+      <p class="lc4-sub">Des cadeaux prêts à offrir, choisis pour être reçus avec plaisir.</p>
+    </div>
+    <a class="lc4-more" href="/collections/boutique-de-noel">Toute la sélection</a>
+  </div>
+  {%- assign noel = collections['boutique-de-noel'] -%}
+  {%- assign shown = 0 -%}
+  <div class="lc4-grid lc4-grid--4">
+    {%- for p in noel.products limit: 16 -%}
+      {%- if p.available and shown < 4 and p.featured_media -%}{%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 300px, 46vw' -%}{%- assign shown = shown | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+<section class="lc4-band lc4-band--yoga" id="lc4-yoga" aria-labelledby="lc4-yoga-title">
+  <div class="lc-wrap">
+    <div class="lc4-head">
+      <div>
+        <h2 class="lc-h2" id="lc4-yoga-title">Yoga & <em>acupression.</em></h2>
+        <p class="lc4-sub">Tapis, coussins et accessoires pour pratiquer chez soi, et points de pression pour les tensions du quotidien.</p>
+      </div>
+      <a class="lc4-more" href="/collections/yoga">Tout le yoga</a>
+    </div>
+    {%- assign yoga = collections['yoga'] -%}
+    {%- assign shown = 0 -%}
+    <div class="lc4-grid lc4-grid--5">
+      {%- for p in yoga.products limit: 16 -%}
+        {%- if p.available and shown < 5 and p.featured_media -%}{%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 250px, 46vw' -%}{%- assign shown = shown | plus: 1 -%}{%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<section class="lc-wrap lc4-block" id="lc4-cocon" aria-labelledby="lc4-cocon-title">
+  <div class="lc4-head">
+    <div>
+      <h2 class="lc-h2" id="lc4-cocon-title">Cocooning <em>d’hiver.</em></h2>
+      <p class="lc4-sub">Plaids, coussins chauffants, théières et tisanes pour les soirées qui raccourcissent.</p>
+    </div>
+    <a class="lc4-more" href="/collections/selection-automne-hiver">Toute la sélection hiver</a>
+  </div>
+  {%- assign cocon = collections['selection-automne-hiver'] -%}
+  {%- assign shown = 0 -%}
+  <div class="lc4-grid lc4-grid--4">
+    {%- for p in cocon.products limit: 16 -%}
+      {%- if p.available and shown < 4 and p.featured_media -%}{%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 300px, 46vw' -%}{%- assign shown = shown | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{%- if s.dehors_image -%}
+<section class="lc-wrap lc4-dehors" aria-labelledby="lc4-dehors-title">
+  <div class="lc4-dehors__media">{{ s.dehors_image | image_url: width: 1536 | image_tag: widths: '700,1000,1300,1536', sizes: '(min-width: 1000px) 680px, 92vw', loading: 'lazy', alt: s.dehors_image.alt }}</div>
+  <div class="lc4-dehors__text">
+    <p class="lc4-dehors__k">Nouvel univers</p>
+    <h2 class="lc-h2" id="lc4-dehors-title">L’été se règle <em>sous la treille.</em></h2>
+    <p class="lc4-sub">Chaises longues, balancelles, hamacs, pergolas et braseros : de l’ombre à midi, de la chaleur à la tombée du jour.</p>
+    <a class="lc-btn lc4-btn--dark" href="/collections/dehors">Explorer l’univers Dehors</a>
+  </div>
+</section>
+{%- endif -%}
+{%- assign c_dehors = collections['dehors'] -%}
+{%- if c_dehors.products_count > 0 -%}
+<section class="lc-wrap lc4-block" aria-labelledby="lc4-dh-title">
+  <div class="lc4-head">
+    <h2 class="lc-h2" id="lc4-dh-title">Vivre <em>dehors.</em></h2>
+    <a class="lc4-more" href="{{ c_dehors.url }}">Les {{ c_dehors.products_count }} objets Dehors</a>
+  </div>
+  <div class="lc4-grid lc4-grid--4">
+    {%- assign shown = 0 -%}
+    {%- for p in c_dehors.products limit: 16 -%}
+      {%- if p.available and shown < 4 and p.featured_media -%}{%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 320px, 46vw' -%}{%- assign shown = shown | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{%- render 'lc-bottom', s: s, hide_dehors: true -%}
+</div>
+
+{% schema %}
+{
+  "name": "Comptoir v4 Vitrine",
+  "tag": "div",
+  "settings": [
+    { "type": "product_list", "id": "heroes", "label": "Héros : 18° Au frais, 21° Au calme, 26° Au chaud (dans cet ordre)", "limit": 3 },
+    { "type": "product_list", "id": "bestsellers", "label": "Les plus vendus", "limit": 8 },
+    { "type": "product_list", "id": "the_products", "label": "L'heure du thé", "limit": 10 },
+    { "type": "product_list", "id": "dos_products", "label": "Bien assis, bien dormi", "limit": 10 },
+    { "type": "image_picker", "id": "frais_image", "label": "Univers Au frais" },
+    { "type": "image_picker", "id": "calme_image", "label": "Univers Au calme" },
+    { "type": "image_picker", "id": "chaud_image", "label": "Univers Au chaud" },
+    { "type": "image_picker", "id": "dehors_image", "label": "Jardin" }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Comptoir v4 Vitrine" }]
+}
+{% endschema %}
