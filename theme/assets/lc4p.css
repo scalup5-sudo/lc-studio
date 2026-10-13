@@ -132,3 +132,5 @@ html.lc4p-sticky-on body{padding-bottom:76px}
 html.lc4p-sticky-on shopify-chat{top:0!important;bottom:72px!important;height:auto!important;transition:bottom .4s}
 html.lc4p-sticky-on .agJsWidget{bottom:76px!important;transition:bottom .4s}
 @media (max-width:760px){html.lc4p-sticky-on .agJsWidget,html.lc4p-sticky-on .agJsWidget *{opacity:0!important;visibility:hidden!important;pointer-events:none!important}}
+/* Fiche mobile : le badge flottant masquait la quantité ; la note Avis Garantis reste visible sous le titre */
+@media (max-width:760px){.agJsWidget{display:none!important}}
