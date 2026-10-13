@@ -6,8 +6,8 @@
   assign u_frais = c_frais.url | default: '/collections/au-frais'
   assign u_chaud = c_chaud.url | default: '/collections/au-chaud'
   assign u_calme = c_calme.url | default: '/collections/au-calme'
-  assign cats = 'ventilateurs|rafraichisseur-d-air|theieres|tisanes|sommeil|plaids-housses-cosy|massage|mobilier-de-jardin|boutique-de-noel' | split: '|'
-  assign cat_names = 'Ventilateurs|Climatiseurs & rafraîchisseurs|Théières & infuseurs|Thés & tisanes|Sommeil|Plaids & couvertures|Massage & détente|Jardin & terrasse|Idées cadeaux' | split: '|'
+  assign cats = 'ventilateurs|rafraichisseur-d-air|theieres|tisanes|sommeil|plaids-housses-cosy|massage|dehors|boutique-de-noel' | split: '|'
+  assign cat_names = 'Ventilateurs|Climatiseurs & rafraîchisseurs|Théières & infuseurs|Thés & tisanes|Sommeil|Plaids & couvertures|Massage & détente|Dehors : jardin & terrasse|Idées cadeaux' | split: '|'
 -%}
 <div class="lc lc4" id="lc-top" data-temp="chaud">
 <script>document.getElementById('lc-top').classList.add('lc-js');</script>
@@ -146,9 +146,25 @@
 <section class="lc-wrap lc4-dehors" aria-labelledby="lc4-dehors-title">
   <div class="lc4-dehors__media">{{ s.dehors_image | image_url: width: 1536 | image_tag: widths: '700,1000,1300,1536', sizes: '(min-width: 1000px) 680px, 92vw', loading: 'lazy', alt: s.dehors_image.alt }}</div>
   <div class="lc4-dehors__text">
+    <p class="lc4-dehors__k">Nouvel univers</p>
     <h2 class="lc-h2" id="lc4-dehors-title">L’été se règle <em>sous la treille.</em></h2>
-    <p class="lc4-sub">Pergolas, salons de jardin, brumisateurs et ventilateurs pour profiter de la terrasse aux heures chaudes.</p>
-    <a class="lc-btn lc4-btn--dark" href="/collections/mobilier-de-jardin">Voir le jardin</a>
+    <p class="lc4-sub">Chaises longues, balancelles, hamacs, pergolas et braseros : de l’ombre à midi, de la chaleur à la tombée du jour.</p>
+    <a class="lc-btn lc4-btn--dark" href="/collections/dehors">Explorer l’univers Dehors</a>
+  </div>
+</section>
+{%- endif -%}
+{%- assign c_dehors = collections['dehors'] -%}
+{%- if c_dehors.products_count > 0 -%}
+<section class="lc-wrap lc4-block" aria-labelledby="lc4-dh-title">
+  <div class="lc4-head">
+    <h2 class="lc-h2" id="lc4-dh-title">Vivre <em>dehors.</em></h2>
+    <a class="lc4-more" href="{{ c_dehors.url }}">Les {{ c_dehors.products_count }} objets Dehors</a>
+  </div>
+  <div class="lc4-grid lc4-grid--4">
+    {%- assign shown = 0 -%}
+    {%- for p in c_dehors.products limit: 16 -%}
+      {%- if p.available and shown < 4 and p.featured_media -%}{%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 320px, 46vw' -%}{%- assign shown = shown | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
   </div>
 </section>
 {%- endif -%}

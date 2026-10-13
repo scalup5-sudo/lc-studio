@@ -26,7 +26,7 @@
 </nav>
 
 <section class="lc-wrap lc4p-main" aria-labelledby="lc4p-title">
-  <div class="lc4p-gallery">
+  <div class="lc4p-gallery" data-lc4p-gallery>
     {%- liquid
       assign studio_m = nil
       for m in product.media
@@ -61,6 +61,7 @@
       <figure class="lc4p-shot lc4p-shot--main"></figure>
     {%- endfor -%}
   </div>
+  {%- if shown_n > 1 -%}<div class="lc4p-dots" data-lc4p-dots aria-hidden="true">{%- for n in (1..shown_n) -%}<span{% if forloop.first %} class="is-on"{% endif %}></span>{%- endfor -%}</div>{%- endif -%}
 
   <div class="lc4p-info">
     {%- if rayon -%}<p class="lc4p-rayon"><a href="{{ rayon.url }}">{{ rayon.title }}</a></p>{%- endif -%}
@@ -117,6 +118,7 @@
         <button type="submit" class="lc-btn lc4-btn--dark lc4p-add" data-lc4p-add{% unless v.available %} disabled{% endunless %}>{% if v.available %}Ajouter au panier{% else %}Bientôt de retour{% endif %}</button>
       </div>
     {%- endform -%}
+    <p class="lc4p-msg" data-lc4p-msg role="alert" hidden></p>
 
     <ul class="lc4p-reassure">
       <li><strong>Livrée en 3 à 8 jours</strong> selon l’article. Point relais dès 3,90&nbsp;€, offert dès 69&nbsp;€ en France.</li>
@@ -130,7 +132,7 @@
       {%- if p_s != '' -%}
         <div class="lc4p-pitch">
           <p class="lc4p-pitch__s">{{ p_s }}</p>
-          {%- if p_items.size > 0 -%}<ul>{%- for it in p_items -%}{%- assign parts = it | remove_first: '* ' | split: ' | ' -%}<li>{%- if parts.size > 1 -%}<strong>{{ parts[0] }}</strong> {{ parts[1] }}{%- else -%}{{ parts[0] }}{%- endif -%}</li>{%- endfor -%}</ul>{%- endif -%}
+          {%- if p_items.size > 0 -%}<ul>{%- for it in p_items -%}{%- assign parts = it | remove_first: '* ' | split: ' | ' -%}<li data-rv>{%- if parts.size > 1 -%}<strong>{{ parts[0] }}</strong> {{ parts[1] }}{%- else -%}{{ parts[0] }}{%- endif -%}</li>{%- endfor -%}</ul>{%- endif -%}
           {%- if p_c != '' -%}<p class="lc4p-pitch__c">{{ p_c }}</p>{%- endif -%}
         </div>
       {%- endif -%}
@@ -146,6 +148,19 @@
     </details>
   </div>
 </section>
+
+<div class="lc4p-sticky" data-lc4p-sticky>
+  <div class="lc4p-sticky__in">
+    {%- assign th = studio_m | default: product.featured_media -%}{%- if th -%}{{ th | image_url: width: 120, height: 120, crop: 'center' | image_tag: loading: 'lazy', alt: '', class: 'lc4p-sticky__img' }}{%- endif -%}
+    <div class="lc4p-sticky__txt"><span class="lc4p-sticky__name">{{ name_main }}</span><span class="lc4p-sticky__price" data-lc4p-sprice>{{ v.price | money }}</span></div>
+    <button type="button" class="lc4p-sticky__btn" data-lc4p-sadd tabindex="-1"{% unless v.available %} disabled{% endunless %}>{% if v.available %}Ajouter au panier{% else %}Bientôt de retour{% endif %}</button>
+  </div>
+</div>
+<div class="lc4p-toast" data-lc4p-toast role="status" aria-live="polite" hidden>
+  <p class="lc4p-toast__t"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#2E7D4F"/><path d="M5 9.3l2.6 2.6L13 6.5" fill="none" stroke="#fff" stroke-width="1.8"/></svg><span>Ajouté au panier</span></p>
+  <p class="lc4p-toast__n">{{ name_main }}</p>
+  <div class="lc4p-toast__a"><a class="lc4p-toast__go" href="{{ routes.cart_url }}">Voir le panier</a><button type="button" class="lc4p-toast__x" data-lc4p-toastx>Continuer</button></div>
+</div>
 
 <section class="lc-wrap lc4p-reviews" id="lc4p-avis" aria-label="Avis clients">
   {%- render 'ag-product-page-widget' -%}
