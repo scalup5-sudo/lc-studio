@@ -119,18 +119,32 @@
  .lc4-card__info{flex-direction:column;gap:4px}
 }
 @media (prefers-reduced-motion:reduce){.lc4-stage__media img{animation:none}}
-/* Rayons visuels (accueil) */
-.lc4-rayons__grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 16px}
-.lc4-rayon{display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit}
-.lc4-rayon__media{display:block;aspect-ratio:4/3;border-radius:20px;overflow:hidden;background:#E9E1D3}
-.lc4-rayon__media img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
-.lc4-rayon:hover .lc4-rayon__media img{transform:scale(1.04)}
-.lc4-rayon:focus-visible{outline:2px solid var(--encre);outline-offset:4px;border-radius:20px}
-.lc4-rayon__body{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.lc4-rayon__name{font-family:var(--serif);font-size:clamp(22px,2vw,28px);line-height:1.05}
-.lc4-rayon__body small{font-size:13px;color:var(--gris);white-space:nowrap}
+/* Rayons — tuiles éditoriales.
+   Les photos de collection n'ont ni le même fond ni la même lumière : un voile chaud
+   commun et le nom posé sur l'image les font tenir ensemble. */
+.lc4-rayons__grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.lc4-rayon{position:relative;display:block;aspect-ratio:3/4;border-radius:22px;overflow:hidden;background:#E3D9C8;text-decoration:none;color:#EEE6D8;isolation:isolate}
+.lc4-rayon__media{position:absolute;inset:0;display:block}
+.lc4-rayon__media img{width:100%;height:100%;object-fit:cover;transition:transform 1.6s var(--ease)}
+.lc4-rayon::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(22,19,15,.04) 0%,rgba(22,19,15,0) 34%,rgba(22,19,15,.26) 62%,rgba(22,19,15,.78) 100%),
+             linear-gradient(0deg,rgba(180,71,31,.13),rgba(180,71,31,.13));
+  transition:opacity .5s}
+.lc4-rayon::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:22px;box-shadow:inset 0 0 0 1px rgba(238,230,216,.16)}
+.lc4-rayon:hover .lc4-rayon__media img{transform:scale(1.055)}
+.lc4-rayon:focus-visible{outline:2px solid var(--encre);outline-offset:3px}
+.lc4-rayon__body{position:absolute;z-index:2;left:0;right:0;bottom:0;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:20px 20px 18px}
+.lc4-rayon__name{font-family:var(--serif);font-size:clamp(20px,1.75vw,27px);line-height:1.04;letter-spacing:-.01em;text-shadow:0 1px 24px rgba(22,19,15,.45)}
+.lc4-rayon__body small{flex:none;font-size:12px;letter-spacing:.01em;color:rgba(238,230,216,.82);white-space:nowrap;padding-bottom:4px}
 @media (max-width:1000px){.lc4-rayons__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.lc4-rayons__grid{gap:22px 12px}.lc4-rayon__media{border-radius:16px}}
+@media (max-width:560px){
+ .lc4-rayons__grid{gap:10px}
+ .lc4-rayon{border-radius:18px;aspect-ratio:4/5}
+ .lc4-rayon::after{border-radius:18px}
+ .lc4-rayon__body{padding:14px 14px 13px;flex-direction:column;align-items:flex-start;gap:2px}
+ .lc4-rayon__name{font-size:18px}
+ .lc4-rayon__body small{padding-bottom:0;font-size:11.5px}
+}
 @media (prefers-reduced-motion:reduce){.lc4-rayon__media img{transition:none}}
 
 /* Thématiques Q4 */
@@ -178,9 +192,3 @@
 /* Accroche fiche produit : max-width 30ch (300px) cassait la phrase et isolait le dernier mot */
 .lc4p .lc4p-hook{max-width:38ch;text-wrap:balance}
 @media (max-width:620px){.lc4p .lc4p-hook{max-width:none}}
-/* Rayons : sur petit écran, le nom et le compte se marchaient dessus sur une seule ligne */
-@media (max-width:560px){
- .lc4-rayon__body{flex-direction:column;align-items:flex-start;gap:3px}
- .lc4-rayon__name{font-size:19px}
- .lc4-rayon__body small{font-size:12px}
-}

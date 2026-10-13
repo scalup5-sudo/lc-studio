@@ -8,7 +8,6 @@
   assign u_calme = c_calme.url | default: '/collections/au-calme'
   assign cats = 'boutique-de-noel|plaids-housses-cosy|theieres|tisanes|sommeil|massage|yoga|acupression|idees-cadeaux-originales-objets-deco' | split: '|'
   assign cat_names = 'Boutique de Noël|Plaids & couvertures|Théières & infuseurs|Thés & tisanes|Sommeil|Massage & détente|Yoga|Acupression|Idées cadeaux' | split: '|'
-  assign vedette = s.vedette | default: s.heroes.first
   assign u_noel = collections['boutique-de-noel'].url | default: '/collections/boutique-de-noel'
 -%}
 <div class="lc lc4" id="lc-top" data-temp="chaud">
@@ -26,28 +25,60 @@
   </div>
 
   <div class="lc4-thermo">
-    {%- if vedette != blank -%}
-      <div class="lc4-stage">
-        <a class="lc4-stage__media" href="{{ vedette.url }}" tabindex="-1" aria-hidden="true">
-          {%- if vedette.featured_media -%}{{ vedette.featured_media | image_url: width: 1264 | image_tag: widths: '600,800,1000,1264', sizes: '(min-width: 1000px) 560px, 92vw', loading: 'eager', fetchpriority: 'high', alt: '' }}{%- endif -%}
-        </a>
-        <div class="lc4-stage__info">
-          <div>
-            <p class="lc4-stage__note">L’objet de la saison</p>
-            {%- render 'lc4-rating', p: vedette -%}
-            <a class="lc4-stage__title" href="{{ vedette.url }}">{{ vedette.title | split: ' – ' | first }}</a>
+    <div class="lc4-thermo__tabs" role="tablist" aria-label="Choisir une température">
+      <button type="button" role="tab" id="lc4-t1" aria-controls="lc4-p1" aria-selected="false" tabindex="-1" data-z="frais"><b>18°</b>Au frais</button>
+      <button type="button" role="tab" id="lc4-t2" aria-controls="lc4-p2" aria-selected="false" tabindex="-1" data-z="calme"><b>21°</b>Au calme</button>
+      <button type="button" role="tab" id="lc4-t3" aria-controls="lc4-p3" aria-selected="true" data-z="chaud"><b>26°</b>Au chaud</button>
+    </div>
+    <div class="lc4-thermo__bar" aria-hidden="true"><span></span></div>
+    {%- for n in (1..3) -%}
+      {%- liquid
+        assign hp = nil
+        for x in s.heroes
+          if forloop.index == n
+            assign hp = x
+          endif
+        endfor
+        case n
+          when 1
+            assign deg = '18'
+            assign note = 'Pour dormir au frais'
+          when 2
+            assign deg = '21'
+            assign note = 'Pour ralentir le soir'
+          else
+            assign deg = '26'
+            assign note = 'Notre meilleure vente'
+        endcase
+        assign load = 'lazy'
+        if n == 3
+          assign load = 'eager'
+        endif
+      -%}
+      <div class="lc4-stage" role="tabpanel" id="lc4-p{{ n }}" aria-labelledby="lc4-t{{ n }}"{% unless n == 3 %} hidden{% endunless %}>
+        {%- if hp != blank -%}
+          <a class="lc4-stage__media" href="{{ hp.url }}" tabindex="-1" aria-hidden="true">
+            <span class="lc4-stage__deg">{{ deg }}°</span>
+            {%- if hp.featured_media -%}{{ hp.featured_media | image_url: width: 1264 | image_tag: widths: '600,800,1000,1264', sizes: '(min-width: 1000px) 560px, 92vw', loading: load, alt: '' }}{%- endif -%}
+          </a>
+          <div class="lc4-stage__info">
+            <div>
+              <p class="lc4-stage__note">{{ note }}</p>
+              {%- render 'lc4-rating', p: hp -%}
+              <a class="lc4-stage__title" href="{{ hp.url }}">{{ hp.title | split: ' – ' | first }}</a>
+            </div>
+            <div class="lc4-stage__buy">
+              <span class="lc4-stage__price">{% if hp.price_varies %}<small>dès </small>{% endif %}{{ hp.price | money }}</span>
+              {%- if hp.available and hp.has_only_default_variant -%}
+                <form method="post" action="{{ routes.cart_add_url }}"><input type="hidden" name="id" value="{{ hp.selected_or_first_available_variant.id }}"><input type="hidden" name="quantity" value="1"><button type="submit" class="lc-btn lc4-btn--dark">Ajouter au panier</button></form>
+              {%- else -%}
+                <a class="lc-btn lc4-btn--dark" href="{{ hp.url }}">Voir le produit</a>
+              {%- endif -%}
+            </div>
           </div>
-          <div class="lc4-stage__buy">
-            <span class="lc4-stage__price">{% if vedette.price_varies %}<small>dès </small>{% endif %}{{ vedette.price | money }}</span>
-            {%- if vedette.available and vedette.has_only_default_variant -%}
-              <form method="post" action="{{ routes.cart_add_url }}"><input type="hidden" name="id" value="{{ vedette.selected_or_first_available_variant.id }}"><input type="hidden" name="quantity" value="1"><button type="submit" class="lc-btn lc4-btn--dark">Ajouter au panier</button></form>
-            {%- else -%}
-              <a class="lc-btn lc4-btn--dark" href="{{ vedette.url }}">Voir le produit</a>
-            {%- endif -%}
-          </div>
-        </div>
+        {%- endif -%}
       </div>
-    {%- endif -%}
+    {%- endfor -%}
   </div>
 </section>
 
@@ -182,7 +213,7 @@
   "name": "Comptoir v4 Vitrine",
   "tag": "div",
   "settings": [
-    { "type": "product", "id": "vedette", "label": "Produit mis en scène en haut de page" },
+    { "type": "product_list", "id": "heroes", "label": "Thermostat : 18° Au frais, 21° Au calme, 26° Au chaud (dans cet ordre)", "limit": 3 },
     { "type": "product_list", "id": "bestsellers", "label": "Les plus vendus", "limit": 8 },
     { "type": "product_list", "id": "the_products", "label": "L'heure du thé", "limit": 10 },
     { "type": "product_list", "id": "dos_products", "label": "Bien assis, bien dormi", "limit": 10 }

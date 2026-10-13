@@ -24,7 +24,11 @@
         "judgeme_carousel"
       ],
       "settings": {
-        "vedette": "theiere-verre-900ml-infuseur-magnetique",
+        "heroes": [
+          "taie-oreiller-soie-murier-climsom-silk-19-mommes",
+          "couverture-lestee-5-9-13kg-microbilles-verre",
+          "theiere-verre-900ml-infuseur-magnetique"
+        ],
         "bestsellers": [
           "theiere-verre-900ml-infuseur-magnetique",
           "couverture-portable-a-capuche-sherpa-polaire-chaude-surdimensionnee",
