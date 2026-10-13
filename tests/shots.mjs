@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 import fs from 'fs';
-const pv = 'preview_theme_id=195111911690';
+const pv = 'preview_theme_id=195147235594';
 const b = await chromium.launch();
 const pages = (process.env.PAGES || '/products/couverture-lestee-7-11-15kg-grandes-dimensions,/products/scandi-lampe-led-macaron').split(',');
 const info = {};
@@ -16,7 +16,7 @@ for (const vp of [{ n: 'm', w: 390, h: 844 }, { n: 'd', w: 1440, h: 900 }]) {
       await p.evaluate((y) => scrollTo(0, y), y); await p.waitForTimeout(900);
       await p.screenshot({ path: `tests/x-${vp.n}-${i}-${y}.png` });
     }
-    info[`${vp.n}-${i}`] = await p.evaluate(() => ({ h: document.body.scrollHeight, sticky: !!document.querySelector('.lc4p-sticky'), stickyVis: (() => { const s = document.querySelector('.lc4p-sticky'); return s ? getComputedStyle(s).transform + ' ' + s.className : null; })() }));
+    info[`${vp.n}-${i}`] = await p.evaluate(() => ({ fixed: [...document.querySelectorAll('body *')].filter(e => getComputedStyle(e).position === 'fixed' && e.getBoundingClientRect().height > 0).map(e => { const r = e.getBoundingClientRect(); return (e.tagName + '#' + e.id + '.' + String(e.className).slice(0, 60) + ' top=' + Math.round(r.top) + ' bottom=' + Math.round(r.bottom) + ' left=' + Math.round(r.left) + ' w=' + Math.round(r.width)); }), h: document.body.scrollHeight, sticky: !!document.querySelector('.lc4p-sticky'), stickyVis: (() => { const s = document.querySelector('.lc4p-sticky'); return s ? getComputedStyle(s).transform + ' ' + s.className : null; })() }));
   }
   await ctx.close();
 }
