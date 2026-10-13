@@ -134,3 +134,8 @@ html.lc4p-sticky-on .agJsWidget{bottom:76px!important;transition:bottom .4s}
 @media (max-width:760px){html.lc4p-sticky-on .agJsWidget,html.lc4p-sticky-on .agJsWidget *{opacity:0!important;visibility:hidden!important;pointer-events:none!important}}
 /* Fiche mobile : le badge flottant masquait la quantité ; la note Avis Garantis reste visible sous le titre */
 @media (max-width:760px){.agJsWidget,.agJsWidget *{opacity:0!important;visibility:hidden!important;pointer-events:none!important}}
+
+/* Galerie bureau : vignettes cliquables */
+@media (min-width:1001px){.lc4p-shot:not(.lc4p-shot--main){cursor:zoom-in;transition:box-shadow .25s,transform .25s}.lc4p-shot:not(.lc4p-shot--main):hover{box-shadow:0 0 0 2px #B4471F;transform:translateY(-2px)}.lc4p-shot:not(.lc4p-shot--main):focus-visible{outline:2px solid #B4471F;outline-offset:3px}.lc4p-shot--main.is-swap img{animation:lc4pSwap .35s ease both}}
+@keyframes lc4pSwap{from{opacity:.35}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.lc4p-shot--main.is-swap img{animation:none}}
