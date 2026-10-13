@@ -119,46 +119,6 @@
  .lc4-card__info{flex-direction:column;gap:4px}
 }
 @media (prefers-reduced-motion:reduce){.lc4-stage__media img{animation:none}}
-
-/* v4.1 — annonce, recherche, notes, réassurance */
-.lc4-annonce{position:fixed;inset:0 0 auto;z-index:81;margin:0;height:34px;display:flex;justify-content:center;align-items:center;gap:28px;background:var(--encre);color:var(--sable);font-size:12.5px;white-space:nowrap;overflow:hidden}
-.lc4 .lc-nav,.lc4 .lc-nav.is-solid{top:44px}
-.lc4-hero{padding-top:128px}
-.lc4-thermo{width:min(100%,max(380px,calc(100svh - 410px)))}
-.lc4-search{display:flex;align-items:center;height:44px;width:clamp(180px,20vw,280px);border-radius:999px;border:1px solid rgba(127,127,127,.35);padding:0 4px 0 16px;background:rgba(255,255,255,.35)}
-.lc4-search input{flex:1;min-width:0;border:0;background:none;font:13px var(--sans);color:var(--encre);outline:none}
-.lc4-search input::placeholder{color:var(--gris)}
-.lc4-search:focus-within{border-color:var(--encre)}
-.lc4-search button{width:36px;height:36px;border:0;border-radius:999px;background:none;color:var(--encre);display:grid;place-items:center;cursor:pointer}
-.lc4-search-icon{display:none}
-.lc4-rating{display:block;margin-top:4px;font-size:13px;color:var(--brun)}
-.lc4-rating small{font-size:12px;color:var(--gris)}
-.lc4-stage__note + .lc4-rating{margin:0 0 6px}
-.lc4-rayons__list{grid-template-columns:repeat(3,minmax(0,1fr))}
-.lc4-rayons__list li:not(:nth-child(4n)){border-right:0}
-.lc4-rayons__list li:not(:nth-child(3n)){border-right:1px solid rgba(22,19,15,.16)}
-.lc4 .lc-promises{grid-template-columns:repeat(4,minmax(0,1fr))}
-.lc4 .lc-promise strong a{color:inherit;text-decoration:none}
-.lc4 .lc-promise span a{color:inherit}
-.lc4 .lc-promise:last-child strong{font-size:clamp(34px,3vw,48px)}
-@media (max-width:1180px){.lc4-search{display:none}.lc4-search-icon{display:grid}}
-@media (max-width:1000px){
- .lc4-annonce span:not(:first-child){display:none}
- .lc4-rayons__list{grid-template-columns:repeat(2,minmax(0,1fr))}
- .lc4-rayons__list li:not(:nth-child(3n)){border-right:0}
- .lc4-rayons__list li:nth-child(odd){border-right:1px solid rgba(22,19,15,.16)}
- .lc4 .lc-promises{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media (max-width:560px){
- .lc4-annonce{font-size:11.5px}
- .lc4-hero{padding-top:124px}
- .lc4-hero__facts{display:none}
- .lc4-hero__lead{margin-top:18px}
- .lc4-hero__ctas{margin-top:22px}
- .lc4-hero__ctas .lc4-btn--line{display:none}
- .lc4 .lc-promises{grid-template-columns:minmax(0,1fr)}
-}
-
 /* Rayons visuels (accueil) */
 .lc4-rayons__grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 16px}
 .lc4-rayon{display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit}
