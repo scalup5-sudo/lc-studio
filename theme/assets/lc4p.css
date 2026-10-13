@@ -128,3 +128,7 @@ html.lc4p-sticky-on body{padding-bottom:76px}
 .lc4p-pitch__u{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px}
 .lc4p-pitch__u span{font-size:13px;color:var(--gris);margin-right:2px}
 .lc4p-pitch__u em{font-style:normal;font-size:13px;padding:6px 12px;border-radius:999px;background:#fff;border:1px solid rgba(22,19,15,.1);color:var(--encre)}
+/* Laisser la place à la barre d'achat : chat et badge d'avis remontent */
+html.lc4p-sticky-on shopify-chat{top:0!important;bottom:72px!important;height:auto!important;transition:bottom .4s}
+html.lc4p-sticky-on .agJsWidget{bottom:76px!important;transition:bottom .4s}
+@media (max-width:760px){html.lc4p-sticky-on .agJsWidget{opacity:0;pointer-events:none}}

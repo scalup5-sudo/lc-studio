@@ -1,0 +1,45 @@
+{%- liquid
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign intro = collection.description | split: '</h2>' | last | replace: '</h3>', ' </h3>' | replace: '</p>', ' </p>' | strip_html | strip | truncatewords: 30
+-%}
+<div class="lc lc4 lc4s" id="lc-top" data-temp="calme">
+{%- render 'lc4-open' -%}
+
+<nav class="lc-wrap lc4s-crumbs" aria-label="Fil d’Ariane"><a href="{{ routes.root_url }}">Accueil</a><span aria-hidden="true">/</span><a href="{{ routes.collections_url }}">Rayons</a></nav>
+
+<header class="lc-wrap lc4c-head">
+  <h1 class="lc4c-title" data-rv>{{ collection.title }}</h1>
+  {%- if intro != blank -%}<p class="lc4c-intro" data-rv>{{ intro }}</p>{%- endif -%}
+</header>
+
+{%- paginate collection.products by 24 -%}
+<div class="lc-wrap lc4c-layout">
+  <aside class="lc4c-side">{%- render 'lc4-filters', results: collection, url: collection.url, sort_by: sort_by -%}</aside>
+  <div class="lc4c-main">
+    {%- render 'lc4-toolbar', results: collection, count: collection.products_count, sort_by: sort_by -%}
+    {%- if collection.products.size > 0 -%}
+      <div class="lc4-grid lc4c-grid">
+        {%- for p in collection.products -%}{%- render 'lc4-pcard', product: p, sizes: '(min-width: 1000px) 280px, 46vw' -%}{%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="lc4-empty"><p>Aucun objet ne correspond à ces filtres.</p><a class="lc-btn lc4-btn--dark" href="{{ collection.url }}">Voir tout le rayon</a></div>
+    {%- endif -%}
+    {%- render 'lc4-pagination', paginate: paginate -%}
+  </div>
+</div>
+{%- endpaginate -%}
+
+{%- if collection.description != blank -%}
+<section class="lc-wrap lc4c-about" aria-labelledby="lc4c-about-title">
+  <h2 id="lc4c-about-title" class="lc4-h3">À propos de ce rayon</h2>
+  <div class="lc4p-rte">{{ collection.description }}</div>
+</section>
+{%- endif -%}
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"{{ request.origin }}/"},{"@type":"ListItem","position":2,"name":{{ collection.title | json }},"item":"{{ request.origin }}{{ collection.url }}"}]}</script>
+{%- render 'lc-bottom', s: section.settings, hide_dehors: true -%}
+</div>
+
+{% schema %}
+{ "name": "Comptoir v4 Rayon", "tag": "div", "settings": [] }
+{% endschema %}

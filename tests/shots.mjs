@@ -9,14 +9,14 @@ for (const vp of [{ n: 'm', w: 390, h: 844 }, { n: 'd', w: 1440, h: 900 }]) {
   const p = await ctx.newPage();
   for (const [i, path] of pages.entries()) {
     await p.goto(`https://comptoir-sante-beaute.com${path}${path.includes('?') ? '&' : '?'}${pv}`, { waitUntil: 'networkidle', timeout: 60000 }).catch(() => {});
-    await p.addStyleTag({ content: '#preview-bar-iframe,iframe[id*=preview]{display:none!important}' }).catch(() => {});
+    await p.addStyleTag({ content: '#preview-bar-iframe,#PBarNextFrameWrapper,iframe[id*=preview]{display:none!important}' }).catch(() => {});
     await p.waitForTimeout(2500);
     await p.screenshot({ path: `tests/x-${vp.n}-${i}-a.png` });
     for (const y of [800, 1700, 2600]) {
       await p.evaluate((y) => scrollTo(0, y), y); await p.waitForTimeout(900);
       await p.screenshot({ path: `tests/x-${vp.n}-${i}-${y}.png` });
     }
-    info[`${vp.n}-${i}`] = await p.evaluate(() => ({ fixed: [...document.querySelectorAll('body *')].filter(e => getComputedStyle(e).position === 'fixed' && e.getBoundingClientRect().height > 0).map(e => { const r = e.getBoundingClientRect(); return (e.tagName + '#' + e.id + '.' + String(e.className).slice(0, 60) + ' top=' + Math.round(r.top) + ' bottom=' + Math.round(r.bottom) + ' left=' + Math.round(r.left) + ' w=' + Math.round(r.width)); }), h: document.body.scrollHeight, sticky: !!document.querySelector('.lc4p-sticky'), stickyVis: (() => { const s = document.querySelector('.lc4p-sticky'); return s ? getComputedStyle(s).transform + ' ' + s.className : null; })() }));
+    info[`${vp.n}-${i}`] = await p.evaluate(() => ({ fixed: [...document.querySelectorAll('body *')].filter(e => getComputedStyle(e).position === 'fixed' && e.getBoundingClientRect().height > 0).map(e => { const r = e.getBoundingClientRect(); return (e.tagName + '#' + e.id + '.' + String(e.className).slice(0, 60) + ' top=' + Math.round(r.top) + ' bottom=' + Math.round(r.bottom) + ' left=' + Math.round(r.left) + ' w=' + Math.round(r.width)); }), h: document.body.scrollHeight, jd: (() => { const r = document.querySelector('.lc4-proof__jdgm'); if (!r) return null; const out = []; r.querySelectorAll('*').forEach((e, i) => { if (i < 40) { const b = e.getBoundingClientRect(); out.push(e.tagName + '.' + String(e.className).slice(0, 50) + ' x=' + Math.round(b.left) + ' w=' + Math.round(b.width) + ' sw=' + e.scrollWidth + ' st=' + (e.getAttribute('style') || '').slice(0, 80)); } }); return out; })(), sticky: !!document.querySelector('.lc4p-sticky'), stickyVis: (() => { const s = document.querySelector('.lc4p-sticky'); return s ? getComputedStyle(s).transform + ' ' + s.className : null; })() }));
   }
   await ctx.close();
 }

@@ -106,3 +106,9 @@
  .lc-touchfx .lc4-rayons__list a.is-lit{transform:none;opacity:1}
 }
 .lc4-dehors__k{display:inline-block;margin:0 0 14px;padding:6px 12px;border-radius:999px;background:rgba(180,71,31,.1);color:#B4471F;font-size:13px;font-weight:500}
+/* Rayons : barre compteur + tri sans débordement sur mobile */
+.lc4c-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0}
+.lc4c-count{white-space:nowrap}
+.lc4c-sort{min-width:0;max-width:100%}
+.lc4c-sort select{max-width:100%}
+@media (max-width:560px){.lc4c-sort{flex:1;display:flex;justify-content:flex-end}.lc4c-sort select{width:100%;max-width:230px}}
