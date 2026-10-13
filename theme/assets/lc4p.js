@@ -28,7 +28,7 @@
       sticky.classList.toggle('is-on',show);
       d.documentElement.classList.toggle('lc4p-sticky-on',show);
       if(sadd)sadd.tabIndex=show?0:-1;
-    },{rootMargin:'0px 0px -40px 0px'});
+    },{rootMargin:'-110px 0px -40px 0px'});
     io.observe(add);
   }
   if(sadd&&form)sadd.addEventListener('click',function(){
