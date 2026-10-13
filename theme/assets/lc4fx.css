@@ -115,3 +115,5 @@
 /* En-tête mobile : tout tient dans la pilule */
 @media (max-width:420px){.lc-nav{gap:6px;padding:6px 6px 6px 14px}.lc-logo{gap:8px;min-width:0}.lc-logo span{font-size:11px;letter-spacing:.16em;white-space:nowrap}.lc-actions{gap:4px;flex-shrink:0}.lc-icon,.lc-menu summary{width:40px;height:40px}.lc-cart{height:40px;padding:0 6px 0 12px;gap:8px}.lc-cart span{min-width:26px;height:26px}}
 @media (max-width:350px){.lc-logo span{display:none}}
+/* Badge Avis Garantis plus discret sur mobile pour ne pas masquer les boutons */
+@media (max-width:760px){.agJsWidget{transform:scale(.7)!important;transform-origin:left bottom!important}}
