@@ -10,8 +10,8 @@
 {
   "layout": "lecomptoir",
   "sections": {
-    "lc4v": {
-      "type": "lc4v-landing",
+    "lc4": {
+      "type": "lc4-landing",
       "blocks": {
         "judgeme_carousel": {
           "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
@@ -24,11 +24,31 @@
         "judgeme_carousel"
       ],
       "settings": {
-        "vedette": "theiere-verre-900ml-infuseur-magnetique"
+        "vedette": "theiere-verre-900ml-infuseur-magnetique",
+        "bestsellers": [
+          "theiere-verre-900ml-infuseur-magnetique",
+          "couverture-portable-a-capuche-sherpa-polaire-chaude-surdimensionnee",
+          "couverture-lestee-5-9-13kg-microbilles-verre",
+          "coussin-chauffant-electrique-avec-dossier"
+        ],
+        "the_products": [
+          "theiere-retro-en-fonte-l-elegance-de-la-tradition",
+          "theiere-en-fonte-gianghts-elegance-et-tradition-pour-vos-moments-de-degustation",
+          "theiere-en-verre-moderne-avec-manche-en-bois-600-ml",
+          "theiere-en-verre-borosilicate-300ml-l-art-du-the-reinvente",
+          "theiere-en-fonte-avec-infuseur-en-acier-inoxydable"
+        ],
+        "dos_products": [
+          "oreiller-cervical-ergonomique-memoire-de-forme",
+          "coussin-de-soutien-aux-lombaires",
+          "coussin-de-sommeil-pour-les-genoux",
+          "coussin-de-siege-confortable-en-mousse",
+          "banc-de-meditation-pliable-en-bois-pour-le-yoga"
+        ]
       }
     }
   },
   "order": [
-    "lc4v"
+    "lc4"
   ]
 }
