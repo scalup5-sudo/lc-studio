@@ -151,6 +151,23 @@
 @keyframes lc4Promo{0%{opacity:0}4%{opacity:1}22%{opacity:1}26%,100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.lc4-annonce span{animation:none!important;opacity:1}.lc4-annonce span:not(:first-child){display:none}}
 
-/* Vidéos démo produit (galerie fiche) */
-.lc4p-shot--video{overflow:hidden;border-radius:20px;background:#E9E1D3}
-.lc4p-shot--video video{width:100%;height:100%;object-fit:cover;display:block}
+/* Preuve client : vidéos verticales (fiche produit) */
+.lc4p-ugc{padding:0 0 clamp(64px,8vw,104px)}
+.lc4p-ugc__head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px 32px;margin-bottom:26px}
+.lc4p-ugc__sub{margin:12px 0 0;font-size:15px;line-height:1.55;max-width:50ch;color:var(--brun)}
+.lc4p-ugc__rate{flex:0 0 auto}
+.lc4p-ugc__strip{list-style:none;margin:0;padding:0 0 6px;display:grid;grid-auto-flow:column;grid-auto-columns:min(248px,58vw);gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.lc4p-ugc__card{position:relative;scroll-snap-align:start;aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#E9E1D3}
+.lc4p-ugc__v{width:100%;height:100%;object-fit:cover;display:block}
+.lc4p-ugc__sound{position:absolute;right:10px;bottom:10px;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:rgba(22,19,15,.55);color:#EEE6D8;display:grid;place-items:center;cursor:pointer;transition:background .25s}
+.lc4p-ugc__sound:hover{background:rgba(22,19,15,.8)}
+.lc4p-ugc__sound:focus-visible{outline:2px solid #EEE6D8;outline-offset:2px}
+.lc4p-ugc__i{grid-area:1/1}
+.lc4p-ugc__i--on{display:none}
+.lc4p-ugc__sound[aria-pressed=true] .lc4p-ugc__i--on{display:block}
+.lc4p-ugc__sound[aria-pressed=true] .lc4p-ugc__i--off{display:none}
+.lc4p-ugc__cta{margin:26px 0 0}
+@media (max-width:560px){
+ .lc4p-ugc__head{align-items:flex-start}
+ .lc4p-ugc__card{border-radius:18px}
+}
