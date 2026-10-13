@@ -12,6 +12,7 @@ for (const vp of [{ n: 'm', w: 390, h: 844 }, { n: 'd', w: 1440, h: 900 }]) {
     await p.addStyleTag({ content: '#preview-bar-iframe,#PBarNextFrameWrapper,iframe[id*=preview]{display:none!important}' }).catch(() => {});
     await p.waitForTimeout(2500);
     await p.screenshot({ path: `tests/x-${vp.n}-${i}-a.png` });
+    if (vp.n === 'd') { const t = await p.$('.lc4p-gallery .lc4p-shot:nth-child(3)'); if (t) { const before = await p.$eval('.lc4p-shot--main img', e => e.currentSrc); await t.click(); await p.waitForTimeout(1200); const after = await p.$eval('.lc4p-shot--main img', e => e.currentSrc); info[`swap-${i}`] = { before, after }; await p.screenshot({ path: `tests/x-d-${i}-click.png` }); } }
     for (const y of [800, 1700, 2600]) {
       await p.evaluate((y) => scrollTo(0, y), y); await p.waitForTimeout(900);
       await p.screenshot({ path: `tests/x-${vp.n}-${i}-${y}.png` });
