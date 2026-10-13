@@ -73,6 +73,7 @@
       assign p_s = ''
       assign p_c = ''
       assign p_b = ''
+      assign p_u = ''
       for l in pl
         assign t = l | strip
         if t == blank
@@ -83,10 +84,12 @@
           assign p_b = p_b | append: t | append: '§'
         elsif f == '= '
           assign p_c = t | remove_first: '= '
+        elsif f == '> '
+          assign p_u = t | remove_first: '> '
         elsif p_k == ''
           assign p_k = t
         else
-          assign p_s = t
+          assign p_s = p_s | append: t | append: '§'
         endif
       endfor
       assign p_items = p_b | split: '§'
@@ -131,7 +134,9 @@
       <summary>Description</summary>
       {%- if p_s != '' -%}
         <div class="lc4p-pitch">
-          <p class="lc4p-pitch__s">{{ p_s }}</p>
+          {%- assign paras = p_s | split: '§' -%}
+          {%- for para in paras -%}<p class="lc4p-pitch__s">{{ para }}</p>{%- endfor -%}
+          {%- if p_u != '' -%}<p class="lc4p-pitch__u"><span>Idéal pour</span>{%- assign uses = p_u | split: ', ' -%}{%- for u in uses -%}<em>{{ u }}</em>{%- endfor -%}</p>{%- endif -%}
           {%- if p_items.size > 0 -%}<ul>{%- for it in p_items -%}{%- assign parts = it | remove_first: '* ' | split: ' | ' -%}<li data-rv>{%- if parts.size > 1 -%}<strong>{{ parts[0] }}</strong> {{ parts[1] }}{%- else -%}{{ parts[0] }}{%- endif -%}</li>{%- endfor -%}</ul>{%- endif -%}
           {%- if p_c != '' -%}<p class="lc4p-pitch__c">{{ p_c }}</p>{%- endif -%}
         </div>
