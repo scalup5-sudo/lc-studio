@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="lc-html">
+  <head>
+    {%- if request.page_type == 'index' -%}
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>Le Comptoir – Sommeil, confort et bien-être à la bonne température</title>
+      <meta name="description" content="Couvertures lestées, oreillers ergonomiques, ventilateurs silencieux, plaids et théières : plus de 1 700 objets pour mieux dormir et être bien chez soi, l’été comme l’hiver.">
+      <link rel="canonical" href="{{ canonical_url }}">
+      <meta property="og:site_name" content="Le Comptoir">
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="{{ canonical_url }}">
+      <meta property="og:title" content="Le Comptoir – Vivre à la bonne température">
+      <meta property="og:description" content="Sommeil, confort et bien-être : plus de 1 700 objets pour être bien chez soi, l’été comme l’hiver.">
+      <meta name="twitter:card" content="summary_large_image">
+      <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Le Comptoir","url":"{{ request.origin }}","telephone":"+33183642749","email":"contact@comptoir-beaute-sante.com"},{"@type":"WebSite","name":"Le Comptoir","url":"{{ request.origin }}","potentialAction":{"@type":"SearchAction","target":"{{ request.origin }}{{ routes.search_url }}?q={search_term_string}","query-input":"required name=search_term_string"}}]}</script>
+    {%- else -%}
+      {%- render 'meta-tags' -%}
+    {%- endif -%}
+    {%- if request.page_type == 'search' or request.page_type == 'cart' -%}<meta name="robots" content="noindex,follow">{%- endif -%}
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    {%- comment -%}
+      Polices servies depuis le domaine de la boutique : plus de connexion à fonts.googleapis.com
+      ni à fonts.gstatic.com, donc deux poignées de main réseau en moins avant l'affichage du texte.
+    {%- endcomment -%}
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'lc-serif-400.woff2' | asset_url }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'lc-sans-400.woff2' | asset_url }}" crossorigin>
+    <style>
+      @font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:swap;src:url({{ 'lc-serif-400.woff2' | asset_url }}) format('woff2')}
+      @font-face{font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;src:url({{ 'lc-serif-400i.woff2' | asset_url }}) format('woff2')}
+      @font-face{font-family:'Geist';font-style:normal;font-weight:400;font-display:swap;src:url({{ 'lc-sans-400.woff2' | asset_url }}) format('woff2')}
+      @font-face{font-family:'Geist';font-style:normal;font-weight:500;font-display:swap;src:url({{ 'lc-sans-500.woff2' | asset_url }}) format('woff2')}
+      @font-face{font-family:'Geist Mono';font-style:normal;font-weight:400;font-display:swap;src:url({{ 'lc-mono-400.woff2' | asset_url }}) format('woff2')}
+    </style>
+
+    {{ 'lc-a.css' | asset_url | stylesheet_tag }}
+    {{ 'lc-b.css' | asset_url | stylesheet_tag }}
+    {{ 'lc4.css' | asset_url | stylesheet_tag }}
+    {{ 'lc4b.css' | asset_url | stylesheet_tag }}
+    {{ 'lc4s.css' | asset_url | stylesheet_tag }}
+    {{ 'lc4c.css' | asset_url | stylesheet_tag }}
+    {{ 'lc4fx.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'lc4fx.js' | asset_url }}" defer></script>
+    {%- if request.page_type == 'product' -%}
+      {{ 'lc4p.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'lc4p.js' | asset_url }}" defer></script>
+    {%- endif -%}
+    <script id="grc-widgets" src="https://widgets.guaranteed-reviews.com/static/widgets.min.js" data-public-key="8f78b9356230a335da2eb008df7cd044" data-lang="auto" defer></script>
+    <script src="{{ 'lc.js' | asset_url }}" defer></script>
+    <script src="{{ 'lc4.js' | asset_url }}" defer></script>
+    {{ content_for_header }}
+    <style>
+      html.lc-html{background:#EEE6D8;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+      html.lc-html body{margin:0;background:#EEE6D8;color:#16130F;font-family:'Geist',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+      .lc .lc-btn{font-family:var(--sans);text-transform:none;letter-spacing:0}
+      .lc-logo span{white-space:nowrap}
+      .lc4p-title .lc4p-sub{display:block;margin-top:12px;font-family:var(--sans);font-size:17px;line-height:1.4;letter-spacing:0;color:var(--brun)}
+      .lc4 .lc-th{margin:clamp(40px,6vw,88px) 0}
+      .lc4 .lc-th__stage{padding-top:142px}
+      .lc4 .lc-th__deg{top:150px}
+      @media (max-width:760px){.lc4 .lc-th__stage{padding-top:124px}.lc4 .lc-th__deg{top:auto}}
+      @media (prefers-reduced-motion:reduce){html.lc-html{scroll-behavior:auto}}
+    </style>
+  </head>
+  <body>
+    <a href="#lc-main" class="lc-skip">Aller au contenu</a>
+    <main id="lc-main" role="main">
+      {{ content_for_layout }}
+    </main>
+  </body>
+</html>
