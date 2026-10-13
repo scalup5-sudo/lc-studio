@@ -141,13 +141,13 @@
 
 /* Bandeau promesse : défilement sur mobile pour montrer les 4 promesses */
 @media (max-width:560px){
- .lc4-annonce span{position:absolute;left:0;right:0;text-align:center;padding:0 16px;opacity:0;animation:lc4Promo 16s infinite}
+ .lc4-annonce span,.lc4-annonce span:not(:first-child){position:absolute;top:0;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:center;padding:0 14px;text-align:center;opacity:0;animation:lc4Promo 16s infinite}
  .lc4-annonce span:nth-child(1){animation-delay:0s}
  .lc4-annonce span:nth-child(2){animation-delay:4s}
  .lc4-annonce span:nth-child(3){animation-delay:8s}
  .lc4-annonce span:nth-child(4){animation-delay:12s}
- .lc4-annonce span:not(:first-child){display:block}
 }
+@media (max-width:360px){.lc4-annonce{font-size:10.5px}}
 @keyframes lc4Promo{0%{opacity:0}4%{opacity:1}22%{opacity:1}26%,100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.lc4-annonce span{animation:none!important;opacity:1}.lc4-annonce span:not(:first-child){display:none}}
 
@@ -170,4 +170,17 @@
 @media (max-width:560px){
  .lc4p-ugc__head{align-items:flex-start}
  .lc4p-ugc__card{border-radius:18px}
+}
+
+/* --- Correctifs d'affichage mobile (mesurés, pas estimés) --- */
+/* Titres de cartes : line-height 1.08 rognait les jambages (g, p, y) sous line-clamp */
+.lc4-card__title{line-height:1.22;padding-bottom:2px}
+/* Accroche fiche produit : max-width 30ch (300px) cassait la phrase et isolait le dernier mot */
+.lc4p .lc4p-hook{max-width:38ch;text-wrap:balance}
+@media (max-width:620px){.lc4p .lc4p-hook{max-width:none}}
+/* Rayons : sur petit écran, le nom et le compte se marchaient dessus sur une seule ligne */
+@media (max-width:560px){
+ .lc4-rayon__body{flex-direction:column;align-items:flex-start;gap:3px}
+ .lc4-rayon__name{font-size:19px}
+ .lc4-rayon__body small{font-size:12px}
 }
